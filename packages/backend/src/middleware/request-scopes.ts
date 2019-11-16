@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import R from 'ramda';
+import * as R from 'ramda';
 
 import { config } from '../config';
 import { JWTError } from '../errors';
@@ -12,7 +12,7 @@ const requestScopes = async (
   parent: any,
   args: any,
   context: any,
-  info: any,
+  info: any
 ) => {
   const { accessToken } = context;
   if (!accessToken) {
@@ -48,7 +48,7 @@ const requestScopes = async (
     const sub = R.path(['payload', 'sub'], decodedToken);
     const nickname = R.path(
       ['payload', 'https://graphql.downtown65.com/nickname'],
-      decodedToken,
+      decodedToken
     );
 
     const updatedContext = {

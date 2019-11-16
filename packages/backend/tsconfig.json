@@ -4,20 +4,20 @@
       "./types",
       "./node_modules/@types"
     ],
-    
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": false,
+    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "dist/",
     "rootDir": "./",
     "resolveJsonModule": true,
     "skipLibCheck": false,
@@ -26,5 +26,8 @@
     "target": "es5",
     "extendedDiagnostics": false
   },
-  "include": ["src", "generated"]
+  "include": [
+    "src",
+    "generated"
+  ]
 }

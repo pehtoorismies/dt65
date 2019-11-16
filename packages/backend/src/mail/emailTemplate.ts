@@ -1,9 +1,7 @@
-import fs from 'fs';
 import nunjucks from 'nunjucks';
-import path from 'path';
 import { map } from 'ramda';
-import util from 'util';
-
+import eventCreatedMjmlTemplate from '../templates/event_created.mjml';
+import weeklyEmailMjmlTemplate from '../templates/weekly_email.mjml';
 import {
   IEmailTemplate,
   IEventEmailOptions,
@@ -11,30 +9,11 @@ import {
   IWeeklyOptions,
 } from '../types';
 
-interface ICache {
-  event?: string;
-  weekly?: string;
-}
-
-const cache: ICache = {};
-
-const loadTemplate = async (fileName: string): Promise<string> => {
-  const templateFile = path.join(__dirname, '../templates', fileName);
-  const readFile = util.promisify(fs.readFile);
-  const template = await readFile(templateFile, 'utf8');
-  return template;
-};
-
 const createEventMail = async (
-  options: IEventEmailOptions,
+  options: IEventEmailOptions
 ): Promise<IEmailTemplate> => {
-  if (!cache.event) {
-    const t: string = await loadTemplate('event_created.mjml');
-    cache.event = t;
-  }
-
   const { title, type, date, eventUrl, creator, description } = options;
-  const mjmlText = nunjucks.renderString(cache.event, options);
+  const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, options);
 
   const plainText = `
     Kippis, 
@@ -69,14 +48,9 @@ const createWeeklyEvent = (options: IWeeklyOptions) =>
   `;
 
 const createWeeklyEmail = async (
-  options: IWeeklyEmailOptions,
+  options: IWeeklyEmailOptions
 ): Promise<IEmailTemplate> => {
-  if (!cache.weekly) {
-    const t: string = await loadTemplate('weekly_email.mjml');
-    cache.weekly = t;
-  }
-
-  const mjmlText = nunjucks.renderString(cache.weekly, options);
+  const mjmlText = nunjucks.renderString(weeklyEmailMjmlTemplate, options);
   const plainText = `
     Kippis, 
 
