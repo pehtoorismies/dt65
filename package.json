@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "description": "Downtown65 Events app",
+  "author": "Antti Tuomaala <pehtoorismies@gmail.com>",
+  "workspaces": [
+    "packages/*"
+  ],
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "compile": "lerna run compile",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "update-version": "lerna publish --skip-git --skip-npm --force-publish '*'",
+    "check-packages": "yarn clean && yarn compile && yarn test && yarn lint",
+    "publish-packages": "./scripts/publish"
+  },
+  "devDependencies": {
+    "lerna": "^3.18.4"
+  }
+}
