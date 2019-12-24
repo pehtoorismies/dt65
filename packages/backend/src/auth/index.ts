@@ -48,7 +48,7 @@ const getAuth0Management = async (): Promise<any> => {
 
 const loginAuth0User = async (
   email: string,
-  password: string,
+  password: string
 ): Promise<{ accessToken: string; idToken: string; expiresIn: string }> => {
   const authZeroUser = await auth0.passwordGrant({
     password,
@@ -85,10 +85,7 @@ const RENAME_KEYS = {
   user_metadata: 'preferences',
 };
 
-const format = pipe(
-  pickAll(AUTH_PROFILE_PROPS),
-  renameKeys(RENAME_KEYS),
-);
+const format = pipe(pickAll(AUTH_PROFILE_PROPS), renameKeys(RENAME_KEYS));
 
 const toUserFormat = (fromAuth0: any): IAuth0Profile => {
   // @ts-ignore
@@ -111,7 +108,7 @@ const formatUsers = pipe(
       return up;
     }
   }),
-  map(renameKeys(RENAME_KEYS)),
+  map(renameKeys(RENAME_KEYS))
 );
 
 // const updateUserCache = async (): Promise<any> => {
@@ -126,7 +123,7 @@ const formatUsers = pipe(
 
 const updateProfile = async (
   auth0UserId: string,
-  updateable: IAuth0ProfileUpdate,
+  updateable: IAuth0ProfileUpdate
 ): Promise<IAuth0Profile> => {
   const management = await getAuth0Management();
   const user = await management.updateUser({ id: auth0UserId }, updateable);
@@ -135,7 +132,7 @@ const updateProfile = async (
 
 const updatePreferences = async (
   auth0UserId: string,
-  preferences: IPreferences,
+  preferences: IPreferences
 ): Promise<IAuth0Profile> => {
   const management = await getAuth0Management();
 
@@ -145,7 +142,7 @@ const updatePreferences = async (
       user_metadata: {
         ...preferences,
       },
-    },
+    }
   );
   return toUserFormat(user);
 };
@@ -176,7 +173,7 @@ const fetchMyProfile = async (auth0Id: string): Promise<IAuth0Profile> => {
 
 // TODO: fix cache
 const fetchUsers = async (
-  verified: boolean = true,
+  verified: boolean = true
 ): Promise<IAuth0Profile[]> => {
   const management = await getAuth0Management();
 
@@ -219,7 +216,7 @@ const AUTH0_QUERY_BASE = {
 };
 
 const pickMailRecipientFields = (
-  users: UserData<any, IAuth0UserMetaData>[],
+  users: UserData<any, IAuth0UserMetaData>[]
 ) => {
   return users
     .map((u: UserData) => {

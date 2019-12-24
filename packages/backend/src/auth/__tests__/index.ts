@@ -21,7 +21,6 @@ test('emailList', () => {
     updated_at: '2019-10-16T18:05:09.793Z',
     user_id: 'auth0|5d9ae9cef5515f0e30d9b42a',
     user_metadata: {
-      
       subscribeEventCreationEmail: true,
       subscribeWeeklyEmail: true,
     },

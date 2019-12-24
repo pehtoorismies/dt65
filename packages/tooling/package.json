@@ -1,0 +1,11 @@
+{
+  "name": "@dt65/tooling",
+  "version": "1.0.0",
+  "description": "Tools for monorepo",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "prettier.config.js",
+    "eslint-config.js"
+  ]
+}

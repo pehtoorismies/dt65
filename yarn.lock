@@ -3568,6 +3568,11 @@ dir-glob@^2.2.2:
   dependencies:
     path-type "^3.0.0"
 
+docker-compose@^0.23.1:
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/docker-compose/-/docker-compose-0.23.1.tgz#d71b1e244b989527585cbd43f6b20dea4881d34c"
+  integrity sha512-9e4moDWxAoEU/WEVJXUnoxXEWDQCX8tQIfuRntApl1atbvz1qV5uoC6YfgYbqUqcIgSD99iZWye7ePrN+ud8AA==
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"

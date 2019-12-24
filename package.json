@@ -5,6 +5,7 @@
   "workspaces": [
     "packages/*"
   ],
+  "npmClient": "yarn",
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -31,7 +31,7 @@ const mapEventOptions = (eventDoc: any): IEventEmailOptions => {
 
 export const notifyEventCreationSubscribers = async (
   users: IMailRecipient[],
-  eventDoc: any,
+  eventDoc: any
 ): Promise<void> => {
   const eventOptions: IEventEmailOptions = mapEventOptions(eventDoc);
 
@@ -44,7 +44,7 @@ export const notifyEventCreationSubscribers = async (
 
 export const notifyWeeklySubscribers = async (
   users: IMailRecipient[],
-  eventDocs: any[],
+  eventDocs: any[]
 ): Promise<void> => {
   const options: IWeeklyOptions[] = eventDocs.map((eventDoc: any) => {
     const weekDay = format(new Date(eventDoc.date), 'EEEE', {

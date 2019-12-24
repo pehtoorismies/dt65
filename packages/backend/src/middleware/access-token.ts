@@ -5,11 +5,7 @@ const getBearerToken = (header?: string) => {
     return null;
   }
 
-  return R.pipe(
-    R.split('Bearer'),
-    R.last,
-    R.trim,
-  )(header);
+  return R.pipe(R.split('Bearer'), R.last, R.trim)(header);
 };
 
 const accessToken = async (

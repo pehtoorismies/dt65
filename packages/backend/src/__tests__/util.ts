@@ -7,7 +7,7 @@ test('emailList', () => {
     emailList([
       { email: 'koira', name: 'sika' },
       { email: 'repo', name: 'kissa' },
-    ]),
+    ])
   ).toBe('koira,repo');
 });
 

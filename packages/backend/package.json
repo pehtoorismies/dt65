@@ -1,5 +1,5 @@
 {
-  "name": "@dt65-events/backend",
+  "name": "@dt65/backend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "@typescript-eslint/parser": "^2.7.0",
     "babel-loader": "^8.0.6",
     "deep-equal": "^1.1.0",
+    "docker-compose": "^0.23.1",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-import": "^2.18.2",
@@ -51,6 +52,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@dt65/tooling": "1.0.0",
     "@types/deep-equal": "^1.0.1",
     "@types/redis": "^2.8.14",
     "apollo-errors": "^1.9.0",
