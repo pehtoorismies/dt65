@@ -25,6 +25,7 @@ const serverOptions = {
 
 const mongoOptions = {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
   autoIndex: false,
   reconnectInterval: 500,
   reconnectTries: Number.MAX_VALUE,

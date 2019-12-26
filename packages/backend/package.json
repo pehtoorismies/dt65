@@ -15,7 +15,7 @@
     "start-prod": "node dist",
     "lint": "eslint ./src --ext .ts",
     "watch:server": "webpack --env.mode=development --watch",
-    "nodemon:dev": "node-dev dist/main.js"
+    "nodemon:dev": "node-dev dist/index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
