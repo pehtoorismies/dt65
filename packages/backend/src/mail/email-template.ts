@@ -1,7 +1,7 @@
 import nunjucks from 'nunjucks';
 import { map } from 'ramda';
-import eventCreatedMjmlTemplate from '../templates/event_created.mjml';
-import weeklyEmailMjmlTemplate from '../templates/weekly_email.mjml';
+import eventCreatedMjmlTemplate from './templates/event_created.mjml';
+import weeklyEmailMjmlTemplate from './templates/weekly_email.mjml';
 import {
   IEmailTemplate,
   IEventEmailOptions,

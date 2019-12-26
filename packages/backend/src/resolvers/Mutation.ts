@@ -19,7 +19,7 @@ import {
 } from '../auth';
 import { config } from '../config';
 import { Auth0Error, NotFoundError, UserInputError } from '../errors';
-import { notifyEventCreationSubscribers } from '../nofications';
+import { notifyEventCreationSubscribers } from '../notifications';
 import { IAuth0Profile, ISimpleUser } from '../types';
 import { filterUndefined } from '../util';
 
@@ -43,7 +43,7 @@ export const EventInput = inputObjectType({
 const createInputError = (
   isValid: boolean,
   errorField: string,
-  errorMessage: string,
+  errorMessage: string
 ): any | undefined => {
   if (!isValid) {
     return new UserInputError({
@@ -69,37 +69,37 @@ export const Mutation = objectType({
       },
       async resolve(_, { email, nickname, password, name, registerSecret }) {
         // Check input
-        const errRegisterSecret = createInputError(
+        const errorRegisterSecret = createInputError(
           config.registerSecret === registerSecret,
           'registerSecret',
-          'Väärä rekisteröintikoodi',
+          'Väärä rekisteröintikoodi'
         );
-        if (errRegisterSecret) {
-          return errRegisterSecret;
+        if (errorRegisterSecret) {
+          return errorRegisterSecret;
         }
-        const errEmail = createInputError(
+        const errorEmail = createInputError(
           EmailValidator.validate(email),
           'email',
-          'Email väärässä muodossa',
+          'Email väärässä muodossa'
         );
-        if (errEmail) {
-          return errEmail;
+        if (errorEmail) {
+          return errorEmail;
         }
-        const errUsername = createInputError(
+        const errorUsername = createInputError(
           !!nickname,
           'nickname',
-          'Nick puuttuu',
+          'Nick puuttuu'
         );
-        if (errUsername) {
-          return errUsername;
+        if (errorUsername) {
+          return errorUsername;
         }
-        const errPassword = createInputError(
+        const errorPassword = createInputError(
           !!password,
           'password',
-          'Salasana puuttuu',
+          'Salasana puuttuu'
         );
-        if (errPassword) {
-          return errPassword;
+        if (errorPassword) {
+          return errorPassword;
         }
         try {
           const createdUser = await createAuth0User({
@@ -186,7 +186,7 @@ export const Mutation = objectType({
       async resolve(
         _,
         { name, nickname },
-        { mongoose, sub, nickname: currentNickname },
+        { mongoose, sub, nickname: currentNickname }
       ) {
         const { EventModel } = mongoose;
         const updatetable = filterUndefined({
@@ -204,12 +204,12 @@ export const Mutation = objectType({
         await EventModel.updateMany(
           { 'participants.sub': sub },
           { $set: { 'participants.$.nickname': nickname } },
-          { multi: true, upsert: false },
+          { multi: true, upsert: false }
         );
         await EventModel.updateMany(
           { 'creator.sub': sub },
           { $set: { 'creator.nickname': nickname } },
-          { multi: true, upsert: false },
+          { multi: true, upsert: false }
         );
         return auth0User;
       },
@@ -224,7 +224,7 @@ export const Mutation = objectType({
       async resolve(
         _,
         { subscribeEventCreationEmail, subscribeWeeklyEmail },
-        { sub },
+        { sub }
       ) {
         const auth0User: IAuth0Profile = await updatePreferences(sub, {
           subscribeEventCreationEmail,
@@ -248,7 +248,7 @@ export const Mutation = objectType({
           mongoose,
           sub,
           nickname,
-        }: { mongoose: any; sub: string; nickname: string },
+        }: { mongoose: any; sub: string; nickname: string }
       ) {
         const { EventModel } = mongoose;
 
@@ -291,12 +291,12 @@ export const Mutation = objectType({
           new: true,
         };
 
-        const res = await EventModel.findOneAndUpdate(
+        const response = await EventModel.findOneAndUpdate(
           conditions,
           update,
-          options,
+          options
         );
-        return res;
+        return response;
       },
     });
 
@@ -307,9 +307,9 @@ export const Mutation = objectType({
       },
       async resolve(_, { id }, { mongoose }) {
         const { EventModel } = mongoose;
-        const res = await EventModel.deleteOne({ _id: id });
+        const response = await EventModel.deleteOne({ _id: id });
 
-        const { deletedCount } = res;
+        const { deletedCount } = response;
         if (deletedCount === 1) {
           return { id };
         }
@@ -326,9 +326,9 @@ export const Mutation = objectType({
       },
       resolve: async (_, { id }, { mongoose, sub, nickname }) => {
         const { EventModel } = mongoose;
-        const evt = await EventModel.findById(id);
+        const event = await EventModel.findById(id);
 
-        if (!evt) {
+        if (!event) {
           return new NotFoundError({
             message: `Event with id ${id} not found`,
           });
@@ -339,17 +339,17 @@ export const Mutation = objectType({
           nickname,
         };
 
-        const partIndex = findParticipantIndex(user.sub, evt.participants);
+        const partIndex = findParticipantIndex(user.sub, event.participants);
 
         const isAlreadyParticipating = partIndex >= 0;
         if (isAlreadyParticipating) {
-          const reducedParts = remove(partIndex, 1, evt.participants);
-          evt.participants = reducedParts;
-          const updated = await evt.save();
+          const reducedParts = remove(partIndex, 1, event.participants);
+          event.participants = reducedParts;
+          const updated = await event.save();
           return updated;
         } else {
-          evt.participants.push(user);
-          const updated = await evt.save();
+          event.participants.push(user);
+          const updated = await event.save();
           return updated;
         }
       },

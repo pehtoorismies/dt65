@@ -1,4 +1,5 @@
-import { toUserFormat } from '../';
+/* eslint-disable @typescript-eslint/camelcase */
+import { toUserFormat } from '..';
 import { IAuth0Profile } from '../../types';
 
 test('emailList', () => {
@@ -31,7 +32,7 @@ test('emailList', () => {
       role: 'USER',
     },
   };
-  // @ts-ignore
+
   const formatted: IAuth0Profile = toUserFormat(auth0User);
 
   expect(formatted.createdAt).toBe('2019-10-07T07:31:26.868Z');

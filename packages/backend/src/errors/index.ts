@@ -14,7 +14,7 @@ export const UserInputError = create('UserInputError', 'Wrong input');
 export const Auth0Error = create('Auth0Error', 'Auth0 error');
 export const AuthorizationError = create(
   'UserInputError',
-  'Not enough privileges',
+  'Not enough privileges'
 );
 export const JWTError = create('JWTError', 'JWT error');
 export const NotFoundError = create('NotFoundError', 'Record not found');

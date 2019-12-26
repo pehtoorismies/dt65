@@ -2,7 +2,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
-    // 'prettier/@typescipt-eslint',
     'plugin:prettier/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
@@ -15,6 +14,6 @@ module.exports = {
   },
   rules: {
     'import/no-default-export': 'error',
-    // 'import/ignore': '/.mjml$',
+    'import/ignore': '/.mjml$',
   },
 };

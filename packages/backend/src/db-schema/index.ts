@@ -1,8 +1,6 @@
-// import EmailValidator from 'email-validator';
 import { Schema } from 'mongoose';
 
 import { EVENT_ENUMS } from '../constants';
-
 
 const timestamps = {
   createdAt: 'createdAt',
@@ -15,7 +13,6 @@ const SimpleUserSchema = new Schema({
   sub: { type: String, required: false },
 });
 
-// EVENT
 const EventSchema = new Schema(
   {
     title: {
@@ -40,7 +37,7 @@ const EventSchema = new Schema(
       type: SimpleUserSchema,
     },
   },
-  { timestamps },
+  { timestamps }
 );
 
 export { EventSchema };

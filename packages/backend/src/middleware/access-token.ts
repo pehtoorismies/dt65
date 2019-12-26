@@ -13,7 +13,7 @@ const accessToken = async (
   parent: any,
   args: any,
   context: any,
-  info: any,
+  info: any
 ) => {
   const authHeader = context.request.get('Authorization');
   const jwtToken = getBearerToken(authHeader);

@@ -2,7 +2,7 @@ import { formatError } from 'apollo-errors';
 import { GraphQLServer } from 'graphql-yoga';
 import { connect, connection, model } from 'mongoose';
 
-import { createSchema } from './createSchema';
+import { createSchema } from './create-schema';
 import { config } from './config';
 import { EventSchema } from './db-schema';
 import {
@@ -38,8 +38,8 @@ const startServer = () => {
 
   const server = new GraphQLServer({
     schema,
-    context: req => ({
-      ...req,
+    context: request => ({
+      ...request,
       mongoose: {
         EventModel: model('Event', EventSchema),
         connection,
@@ -74,8 +74,8 @@ connect(mongoUrl, mongoOptions).then(
   () => {
     console.log('Ready');
   },
-  err => {
-    console.error(err);
+  error => {
+    console.error(error);
   }
 );
 

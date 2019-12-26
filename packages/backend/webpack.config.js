@@ -11,7 +11,7 @@ module.exports = ({ mode }) => {
       mode === 'development' ? 'eval-cheap-module-source-maps' : 'sourcemap',
     entry: {
       index: './src/index.ts',
-      generateSchema: './src/generateSchema.ts',
+      'generate-schema': './src/generate-schema.ts',
     },
     output: {
       path: path.join(__dirname, 'dist'),

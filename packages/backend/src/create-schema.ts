@@ -1,8 +1,9 @@
 import { resolve } from 'path';
 import { makeSchema } from 'nexus';
 import * as allTypes from './resolvers';
+import { NexusGraphQLSchema } from 'nexus/dist/core';
 
-const createSchema = (saveFiles: boolean) => {
+const createSchema = (saveFiles: boolean): NexusGraphQLSchema => {
   const schema = makeSchema({
     types: allTypes,
     shouldGenerateArtifacts: saveFiles,

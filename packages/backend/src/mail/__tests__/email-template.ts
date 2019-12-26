@@ -1,4 +1,6 @@
-import { createEventMail, createWeeklyEmail } from '../emailTemplate';
+/* cSpell:disable */
+
+import { createEventMail, createWeeklyEmail } from '../email-template';
 import { IEventEmailOptions, IWeeklyEmailOptions } from '../../types';
 
 test('Creation email', async () => {

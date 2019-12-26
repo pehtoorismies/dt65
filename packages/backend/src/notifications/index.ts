@@ -9,31 +9,32 @@ import { findType } from '../util';
 
 const { clientDomain } = config;
 
-const mapEventOptions = (eventDoc: any): IEventEmailOptions => {
-  const date = format(new Date(eventDoc.date), 'dd.MM.yyyy (EEEE)', {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapEventOptions = (eventDocument: any): IEventEmailOptions => {
+  const date = format(new Date(eventDocument.date), 'dd.MM.yyyy (EEEE)', {
     locale: fi,
   });
 
-  const type = eventDoc.type;
+  const type = eventDocument.type;
   const typeHeader = findType(type, EVENT_TYPES, EVENT_TYPES[0].title);
 
   return {
-    title: eventDoc.title,
-    eventUrl: `${clientDomain}/events/${eventDoc._id}`,
-    creator: eventDoc.creator.nickname,
+    title: eventDocument.title,
+    eventUrl: `${clientDomain}/events/${eventDocument._id}`,
+    creator: eventDocument.creator.nickname,
     date,
     typeHeader,
     type: type.toLowerCase(),
-    description: eventDoc.description || 'ei tarkempaa kuvausta.',
+    description: eventDocument.description || 'ei tarkempaa kuvausta.',
     preferencesUrl: `${clientDomain}/preferences`,
   };
 };
 
 export const notifyEventCreationSubscribers = async (
   users: IMailRecipient[],
-  eventDoc: any
+  eventDocument: any
 ): Promise<void> => {
-  const eventOptions: IEventEmailOptions = mapEventOptions(eventDoc);
+  const eventOptions: IEventEmailOptions = mapEventOptions(eventDocument);
 
   if (users.length === 0) {
     // no subsriptions
@@ -44,22 +45,23 @@ export const notifyEventCreationSubscribers = async (
 
 export const notifyWeeklySubscribers = async (
   users: IMailRecipient[],
-  eventDocs: any[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  eventDocuments: any[]
 ): Promise<void> => {
-  const options: IWeeklyOptions[] = eventDocs.map((eventDoc: any) => {
-    const weekDay = format(new Date(eventDoc.date), 'EEEE', {
+  const options: IWeeklyOptions[] = eventDocuments.map((eventDocument: any) => {
+    const weekDay = format(new Date(eventDocument.date), 'EEEE', {
       locale: fi,
     });
-    const date = format(new Date(eventDoc.date), 'dd.MM.yyyy', {
+    const date = format(new Date(eventDocument.date), 'dd.MM.yyyy', {
       locale: fi,
     });
 
     return {
-      ...mapEventOptions(eventDoc),
-      subtitle: eventDoc.subtitle,
+      ...mapEventOptions(eventDocument),
+      subtitle: eventDocument.subtitle,
       weekDay,
       date,
-      participantCount: eventDoc.participants.length,
+      participantCount: eventDocument.participants.length,
     };
   });
 

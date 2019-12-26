@@ -1,3 +1,4 @@
+/* cSpell:disable */
 import { emailList, recipientVariables, filterUndefined } from '../util';
 import { path } from 'ramda';
 import dequal from 'deep-equal';

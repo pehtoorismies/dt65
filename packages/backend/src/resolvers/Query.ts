@@ -8,7 +8,7 @@ import {
   fetchWeeklyEmailSubscribers,
 } from '../auth';
 import { NotFoundError } from '../errors';
-import { notifyWeeklySubscribers } from '../nofications';
+import { notifyWeeklySubscribers } from '../notifications';
 import { IAuth0Profile } from '../types';
 
 export const Query = objectType({
