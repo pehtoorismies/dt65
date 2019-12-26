@@ -1,6 +1,6 @@
 import { enumType, objectType } from 'nexus';
-
 import { EVENT_ENUMS } from '../constants';
+import { ObjectDefinitionBlock } from 'nexus/dist/core';
 
 export const EventType = enumType({
   name: 'EventType',
@@ -9,7 +9,7 @@ export const EventType = enumType({
 
 export const Event = objectType({
   name: 'Event',
-  definition(t) {
+  definition(t: ObjectDefinitionBlock<'Event'>) {
     t.string('id');
     t.string('title');
     t.string('subtitle', { nullable: true });

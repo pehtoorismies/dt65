@@ -6,7 +6,10 @@ module.exports = ({ mode }) => {
   return {
     mode,
     devtool: mode === 'development' ? 'eval-cheap-module-source-maps' : 0,
-    entry: './src/index.ts',
+    entry: {
+      index: './src/index.ts',
+      generateSchema: './src/generateSchema.ts',
+    },
     output: {
       path: path.join(__dirname, 'dist'),
       filename: '[name].js',
