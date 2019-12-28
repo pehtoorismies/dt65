@@ -22,7 +22,7 @@ export interface EventType {
   title: string;
 }
 
-export interface EventEmailOptions {
+export interface EventEmailContent {
   title: string;
   type: string;
   typeHeader: string;
@@ -33,13 +33,13 @@ export interface EventEmailOptions {
   description: string;
 }
 
-export interface IWeeklyOptions extends EventEmailOptions {
+export interface WeeklyEventContent extends EventEmailContent {
   weekDay: string;
   participantCount: number;
   subtitle: string;
 }
-export interface WeeklyEmailOptions {
-  eventOptions: IWeeklyOptions[];
+export interface WeeklyEmailContent {
+  eventOptions: WeeklyEventContent[];
   preferencesUrl: string;
 }
 

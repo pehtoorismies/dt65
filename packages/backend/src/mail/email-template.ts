@@ -4,16 +4,16 @@ import eventCreatedMjmlTemplate from './templates/event-created.mjml';
 import weeklyEmailMjmlTemplate from './templates/weekly-email.mjml';
 import {
   EmailTemplate,
-  EventEmailOptions,
-  WeeklyEmailOptions,
-  IWeeklyOptions,
+  EventEmailContent,
+  WeeklyEventContent,
+  WeeklyEmailContent,
 } from '../types';
 
 const createEventMail = async (
-  options: EventEmailOptions
+  content: EventEmailContent
 ): Promise<EmailTemplate> => {
-  const { title, type, date, eventUrl, creator, description } = options;
-  const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, options);
+  const { title, type, date, eventUrl, creator, description } = content;
+  const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, content);
 
   const plainText = `
     Kippis, 
@@ -36,19 +36,19 @@ const createEventMail = async (
   };
 };
 
-const createWeeklyEvent = (options: IWeeklyOptions) =>
+const createWeeklyEvent = (content: WeeklyEventContent): string =>
   `
     ---
-    ${options.title}
-    ${options.subtitle}
-    ${options.weekDay} ${options.date}
+    ${content.title}
+    ${content.subtitle}
+    ${content.weekDay} ${content.date}
 
-    Tarkastele tapahtumaa: ${options.eventUrl}
+    Tarkastele tapahtumaa: ${content.eventUrl}
     
   `;
 
 const createWeeklyEmail = async (
-  options: WeeklyEmailOptions
+  options: WeeklyEmailContent
 ): Promise<EmailTemplate> => {
   const mjmlText = nunjucks.renderString(weeklyEmailMjmlTemplate, options);
   const plainText = `

@@ -1,10 +1,10 @@
 /* cSpell:disable */
 
 import { createEventMail, createWeeklyEmail } from '../email-template';
-import { EventEmailOptions, WeeklyEmailOptions } from '../../types';
+import { EventEmailContent, WeeklyEmailOptions } from '../../types';
 
 test('Creation email', async () => {
-  const options: EventEmailOptions = {
+  const options: EventEmailContent = {
     title: 'some title',
     type: 'skiing',
     typeHeader: 'Hiihto',

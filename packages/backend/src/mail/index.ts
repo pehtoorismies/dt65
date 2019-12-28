@@ -3,9 +3,9 @@ import mjml2html from 'mjml';
 
 import { config } from '../config';
 import {
-  EventEmailOptions,
+  EventEmailContent,
   EmailRecipient,
-  WeeklyEmailOptions,
+  WeeklyEmailContent,
 } from '../types';
 import { emailList, recipientVariables } from '../util';
 import { createEventMail, createWeeklyEmail } from './email-template';
@@ -20,10 +20,10 @@ const mg = mailgun({
 
 const sendEventCreationEmail = async (
   recipients: EmailRecipient[],
-  options: EventEmailOptions
+  content: EventEmailContent
 ): Promise<boolean> => {
-  const { typeHeader } = options;
-  const { mjmlText, plainText } = await createEventMail(options);
+  const { typeHeader } = content;
+  const { mjmlText, plainText } = await createEventMail(content);
   const mailContent = mjml2html(mjmlText);
 
   const data: messages.BatchData = {
@@ -47,9 +47,9 @@ const sendEventCreationEmail = async (
 
 const sendWeeklyEmail = async (
   recipients: EmailRecipient[],
-  options: WeeklyEmailOptions
+  content: WeeklyEmailContent
 ): Promise<boolean> => {
-  const { mjmlText, plainText } = await createWeeklyEmail(options);
+  const { mjmlText, plainText } = await createWeeklyEmail(content);
   const mailContent = mjml2html(mjmlText);
 
   const data: messages.BatchData = {
