@@ -13,17 +13,20 @@ import {
   createAuth0User,
   loginAuth0User,
   requestChangePasswordEmail,
-  updatePreferences,
+  updateUserMetadata,
   updateProfile,
   fetchCreateEventSubscribers,
 } from '../auth';
 import { config } from '../config';
 import { Auth0Error, NotFoundError, UserInputError } from '../errors';
 import { notifyEventCreationSubscribers } from '../notifications';
-import { IAuth0Profile, ISimpleUser } from '../types';
+import { UserProfile } from '../types';
 import { filterUndefined } from '../util';
 
-const findParticipantIndex = (sub: string, participants: ISimpleUser[]) => {
+const findParticipantIndex = (
+  sub: string,
+  participants: { sub: string }[]
+): number => {
   return findIndex(propEq('sub', sub))(participants);
 };
 
@@ -194,7 +197,7 @@ export const Mutation = objectType({
           nickname,
         });
 
-        const auth0User: IAuth0Profile = await updateProfile(sub, updatetable);
+        const auth0User: UserProfile = await updateProfile(sub, updatetable);
         console.log(`current: ${currentNickname} - updated: ${nickname}`);
         if (!nickname || currentNickname === nickname) {
           return auth0User;
@@ -226,7 +229,7 @@ export const Mutation = objectType({
         { subscribeEventCreationEmail, subscribeWeeklyEmail },
         { sub }
       ) {
-        const auth0User: IAuth0Profile = await updatePreferences(sub, {
+        const auth0User: UserProfile = await updateUserMetadata(sub, {
           subscribeEventCreationEmail,
           subscribeWeeklyEmail,
         });
@@ -270,7 +273,11 @@ export const Mutation = objectType({
 
         if (notifySubscribers) {
           const subscribedUsers = await fetchCreateEventSubscribers();
-          notifyEventCreationSubscribers(subscribedUsers, createdEvent);
+          notifyEventCreationSubscribers(
+            subscribedUsers,
+            createdEvent,
+            config.clientDomain
+          );
         }
 
         return createdEvent;

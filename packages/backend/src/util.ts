@@ -18,16 +18,13 @@ import {
 import rp from 'request-promise';
 
 import { config } from './config';
-import { IEventType, IMailRecipient, IAuth0ProfileUpdate } from './types';
+import { EventType, EmailRecipient, ProfileUpdateProps } from './types';
 
 const isEmailOrOpenId = (n: string) => n === 'email' || n === 'openid';
 
 let kidCache: any = {};
 
-export const getScopes = pipe(
-  split(' '),
-  reject(isEmailOrOpenId),
-);
+export const getScopes = pipe(split(' '), reject(isEmailOrOpenId));
 
 export const getMatchingPubKey = async (kid: string) => {
   if (kidCache[kid]) {
@@ -50,32 +47,32 @@ export const getMatchingPubKey = async (kid: string) => {
 
 export const findType = (
   type: string,
-  eventTypes: IEventType[],
-  defaultTitle: string,
+  eventTypes: EventType[],
+  defaultTitle: string
 ) => {
-  const e = find(propEq('id', type), eventTypes);
-  if (e) {
-    return prop('title', e);
+  const eventType = find(propEq('id', type), eventTypes);
+  if (eventType) {
+    return prop('title', eventType);
   }
   // return something
-  console.error('Not founding type ', type);
+  console.error('Not founding type', type);
   return defaultTitle;
 };
 
-export const emailList = (recipients: IMailRecipient[]): string => {
+export const emailList = (recipients: EmailRecipient[]): string => {
   return pipe(
     // @ts-ignore
     pluck('email'),
-    join(','),
+    join(',')
   )(recipients);
 };
 
 const indexedReducer = addIndex(reduce);
 
 export const recipientVariables = (
-  recipients: IMailRecipient[],
+  recipients: EmailRecipient[]
 ): messages.BatchSendRecipientVars => {
-  const reducer = (acc: any, curr: IMailRecipient, id: number) => {
+  const reducer = (acc: any, curr: EmailRecipient, id: number) => {
     const { email, name } = curr;
 
     const valueObj = {
@@ -96,10 +93,9 @@ const getDefinedProp = pipe(
   toPairs,
   // @ts-ignore
   filter(valueFilter),
-  fromPairs,
+  fromPairs
 );
 
-export const filterUndefined = (newMe: IAuth0ProfileUpdate) => {
+export const filterUndefined = (newMe: ProfileUpdateProps) => {
   return getDefinedProp(newMe);
 };
-

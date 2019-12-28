@@ -1,22 +1,16 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import {
-  AuthenticationClient,
-  ManagementClient,
-  UserData,
-  AppMetadata,
-  UserMetadata,
-} from 'auth0';
+import { AuthenticationClient, ManagementClient, UserData } from 'auth0';
 import { map, pickAll, pipe } from 'ramda';
 import { renameKeys } from 'ramda-adjunct';
 
 import { config } from '../config';
 import {
-  IAuth0Profile,
-  IAuth0ProfileUpdate,
-  IAuth0User,
-  IMailRecipient,
-  IAuth0UserMetaData,
-  IPreferences,
+  UserProfile,
+  ProfileUpdateProps,
+  Auth0User,
+  EmailRecipient,
+  UserMetadata,
+  AppMetadata,
 } from '../types';
 
 const { domain, clientId, clientSecret, jwtAudience } = config.auth;
@@ -80,7 +74,7 @@ const RENAME_KEYS = {
 
 const format = pipe(pickAll(AUTH_PROFILE_PROPS), renameKeys(RENAME_KEYS));
 
-const toUserFormat = (fromAuth0: any): IAuth0Profile => {
+const toUserFormat = (fromAuth0: any): UserProfile => {
   return format(fromAuth0);
 };
 
@@ -105,17 +99,17 @@ const formatUsers = pipe(
 
 const updateProfile = async (
   auth0UserId: string,
-  updateable: IAuth0ProfileUpdate
-): Promise<IAuth0Profile> => {
+  updateable: ProfileUpdateProps
+): Promise<UserProfile> => {
   const management = await getAuth0Management();
   const user = await management.updateUser({ id: auth0UserId }, updateable);
   return toUserFormat(user);
 };
 
-const updatePreferences = async (
+const updateUserMetadata = async (
   auth0UserId: string,
-  preferences: IPreferences
-): Promise<IAuth0Profile> => {
+  userMetadata: UserMetadata
+): Promise<UserProfile> => {
   const management = await getAuth0Management();
 
   const user = await management.updateUser(
@@ -123,32 +117,29 @@ const updatePreferences = async (
     {
       // eslint-disable-next-line @typescript-eslint/camelcase
       user_metadata: {
-        ...preferences,
+        ...userMetadata,
       },
     }
   );
   return toUserFormat(user);
 };
 
-const fetchMyProfile = async (auth0Id: string): Promise<IAuth0Profile> => {
+const fetchMyProfile = async (auth0Id: string): Promise<UserProfile> => {
   const management = await getAuth0Management();
 
   const user = await management.getUser({ id: auth0Id });
   return toUserFormat(user);
 };
 
-// TODO: fix cache
-const fetchUsers = async (
-  verified: boolean = true
-): Promise<IAuth0Profile[]> => {
+const fetchUsers = async (): Promise<UserProfile[]> => {
   const management = await getAuth0Management();
 
   const usersResp: Array<any> = await management.getUsers();
-  const userList: IAuth0Profile[] = formatUsers(usersResp);
+  const userList: UserProfile[] = formatUsers(usersResp);
   return userList;
 };
 
-const createAuth0User = async (user: IAuth0User): Promise<IAuth0Profile> => {
+const createAuth0User = async (user: Auth0User): Promise<UserProfile> => {
   const management = await getAuth0Management();
 
   const auth0User = await management.createUser({
@@ -172,29 +163,28 @@ const AUTH0_QUERY_BASE = {
 };
 
 const pickMailRecipientFields = (
-  users: UserData<any, IAuth0UserMetaData>[]
-) => {
+  users: UserData<AppMetadata, UserMetadata>[]
+): EmailRecipient[] => {
   return users
-    .map((u: UserData) => {
-      return {
-        name: u.name || '',
-        email: u.email || '',
-      };
-    })
-    .filter((u: IMailRecipient) => {
+    .map(
+      (u: UserData): EmailRecipient => {
+        return {
+          name: u.name || '',
+          email: u.email || '',
+        };
+      }
+    )
+    .filter((u: EmailRecipient) => {
       return !!u.email;
     });
 };
 
-const fetchCreateEventSubscribers = async (): Promise<IMailRecipient[]> => {
+const fetchCreateEventSubscribers = async (): Promise<EmailRecipient[]> => {
   const management = await getAuth0Management();
 
   try {
     const q = `user_metadata.subscribeEventCreationEmail:true`;
-    const users: UserData<
-      any,
-      IAuth0UserMetaData
-    >[] = await management.getUsers({
+    const users: UserData<any, UserMetadata>[] = await management.getUsers({
       ...AUTH0_QUERY_BASE,
       q,
     });
@@ -206,7 +196,7 @@ const fetchCreateEventSubscribers = async (): Promise<IMailRecipient[]> => {
   }
 };
 
-const fetchWeeklyEmailSubscribers = async (): Promise<IMailRecipient[]> => {
+const fetchWeeklyEmailSubscribers = async (): Promise<EmailRecipient[]> => {
   const management = await getAuth0Management();
 
   try {
@@ -258,7 +248,7 @@ export {
   fetchUsers,
   fetchMyProfile,
   toUserFormat,
-  updatePreferences,
+  updateUserMetadata,
   updateProfile,
   fetchCreateEventSubscribers,
   fetchWeeklyEmailSubscribers,

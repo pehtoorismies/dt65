@@ -1,60 +1,28 @@
-export interface AuthConfig {
+export interface Auth0Config {
   domain: string;
   clientId: string;
   clientSecret: string;
   jwtAudience: string;
 }
 
-export interface IMailRecipient {
+export interface EmailRecipient {
   email: string;
   name: string;
 }
 
-export interface IMailgunConfig {
+export interface MailgunConfig {
   apiKey: string;
   domain: string;
   fromMail: string;
   host: string;
 }
 
-export interface ISimpleUser {
-  id: string;
-  username?: string;
-  nickname: string;
-  sub: string;
-}
-
-interface IAuth0Response {
-  error?: {
-    name: string;
-    message: string;
-    statusCode: number;
-  };
-}
-
-export interface IEventType {
+export interface EventType {
   id: string;
   title: string;
 }
 
-export interface IAuth0RegisterResponse extends IAuth0Response {
-  auth0UserId?: string | number;
-}
-
-export interface IAuth0LoginResponse extends IAuth0Response {
-  user?: {
-    accessToken: string;
-    idToken: string;
-    expiresIn: number;
-  };
-}
-
-export interface IKeyValuePair {
-  key: string;
-  value: string;
-}
-
-export interface IEventEmailOptions {
+export interface EventEmailOptions {
   title: string;
   type: string;
   typeHeader: string;
@@ -65,34 +33,37 @@ export interface IEventEmailOptions {
   description: string;
 }
 
-export interface IWeeklyOptions extends IEventEmailOptions {
+export interface IWeeklyOptions extends EventEmailOptions {
   weekDay: string;
   participantCount: number;
   subtitle: string;
 }
-export interface IWeeklyEmailOptions {
+export interface WeeklyEmailOptions {
   eventOptions: IWeeklyOptions[];
   preferencesUrl: string;
 }
 
-export interface IEmailTemplate {
+export interface EmailTemplate {
   plainText: string;
   mjmlText: string;
 }
 
-export interface IAuth0User {
+export interface Auth0User {
   email: string;
   nickname: string;
   password: string;
   name: string;
 }
 
-export interface IPreferences {
-  subscribeEventCreationEmail: boolean;
-  subscribeWeeklyEmail: boolean;
+export interface UserMetadata {
+  subscribeEventCreationEmail: string;
+  subscribeWeeklyEmail: string;
+}
+export interface AppMetadata {
+  role: string;
 }
 
-export interface IAuth0Profile {
+export interface UserProfile {
   id: string;
   email: string;
   username: string;
@@ -101,22 +72,24 @@ export interface IAuth0Profile {
   picture: string;
   createdAt: string;
   updatedAt?: string;
-  preferences: IPreferences;
+  preferences: UserMetadata;
 }
 
-export interface IAuth0ProfileUpdate {
+export interface ProfileUpdateProps {
   name?: string | null;
   username?: string | null;
   nickname?: string | null;
 }
 
-export interface IAuth0UserMetaData {
-  subscribeEventCreationEmail: string;
-  subscribeWeeklyEmail: string;
-}
-
-export interface IAuth0UserBasic {
-  name: string;
-  email: string;
-  nickname: string;
+export interface EventDocument {
+  _id: string;
+  title: string;
+  date: string;
+  type: string;
+  subtitle: string;
+  creator: {
+    nickname: string;
+  };
+  description?: string;
+  participants: {}[];
 }

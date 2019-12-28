@@ -1,8 +1,8 @@
 import { pluck } from 'ramda';
 
-import { IEventType } from './types';
+import { EventType } from './types';
 
-export const EVENT_TYPES: IEventType[] = [
+export const EVENT_TYPES: EventType[] = [
   {
     id: 'Cycling',
     title: 'Pyöräily',

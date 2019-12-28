@@ -1,10 +1,10 @@
 /* cSpell:disable */
 
 import { createEventMail, createWeeklyEmail } from '../email-template';
-import { IEventEmailOptions, IWeeklyEmailOptions } from '../../types';
+import { EventEmailOptions, WeeklyEmailOptions } from '../../types';
 
 test('Creation email', async () => {
-  const options: IEventEmailOptions = {
+  const options: EventEmailOptions = {
     title: 'some title',
     type: 'skiing',
     typeHeader: 'Hiihto',
@@ -30,7 +30,7 @@ test('Creation email', async () => {
 });
 
 test('Creation email', async () => {
-  const options: IWeeklyEmailOptions = {
+  const options: WeeklyEmailOptions = {
     eventOptions: [
       {
         title: 'some title',

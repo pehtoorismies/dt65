@@ -33,11 +33,12 @@ const mongoOptions = {
   useFindAndModify: false,
 };
 
-const startServer = () => {
+const startServer = (): void => {
   const schema = createSchema(false);
 
   const server = new GraphQLServer({
     schema,
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     context: request => ({
       ...request,
       mongoose: {

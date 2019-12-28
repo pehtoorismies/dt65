@@ -1,17 +1,17 @@
 import nunjucks from 'nunjucks';
 import { map } from 'ramda';
-import eventCreatedMjmlTemplate from './templates/event_created.mjml';
-import weeklyEmailMjmlTemplate from './templates/weekly_email.mjml';
+import eventCreatedMjmlTemplate from './templates/event-created.mjml';
+import weeklyEmailMjmlTemplate from './templates/weekly-email.mjml';
 import {
-  IEmailTemplate,
-  IEventEmailOptions,
-  IWeeklyEmailOptions,
+  EmailTemplate,
+  EventEmailOptions,
+  WeeklyEmailOptions,
   IWeeklyOptions,
 } from '../types';
 
 const createEventMail = async (
-  options: IEventEmailOptions
-): Promise<IEmailTemplate> => {
+  options: EventEmailOptions
+): Promise<EmailTemplate> => {
   const { title, type, date, eventUrl, creator, description } = options;
   const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, options);
 
@@ -48,8 +48,8 @@ const createWeeklyEvent = (options: IWeeklyOptions) =>
   `;
 
 const createWeeklyEmail = async (
-  options: IWeeklyEmailOptions
-): Promise<IEmailTemplate> => {
+  options: WeeklyEmailOptions
+): Promise<EmailTemplate> => {
   const mjmlText = nunjucks.renderString(weeklyEmailMjmlTemplate, options);
   const plainText = `
     Kippis, 

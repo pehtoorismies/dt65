@@ -1,16 +1,22 @@
 import format from 'date-fns/format';
 import { fi } from 'date-fns/locale';
 
-import { config } from '../config';
 import { EVENT_TYPES } from '../constants';
 import { sendEventCreationEmail, sendWeeklyEmail } from '../mail';
-import { IEventEmailOptions, IMailRecipient, IWeeklyOptions } from '../types';
+import {
+  EventDocument,
+  EventEmailOptions,
+  EmailRecipient,
+  IWeeklyOptions,
+} from '../types';
 import { findType } from '../util';
 
-const { clientDomain } = config;
+// const { clientDomain } = config;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mapEventOptions = (eventDocument: any): IEventEmailOptions => {
+const mapEventOptions = (
+  eventDocument: EventDocument,
+  clientDomain: string
+): EventEmailOptions => {
   const date = format(new Date(eventDocument.date), 'dd.MM.yyyy (EEEE)', {
     locale: fi,
   });
@@ -31,39 +37,44 @@ const mapEventOptions = (eventDocument: any): IEventEmailOptions => {
 };
 
 export const notifyEventCreationSubscribers = async (
-  users: IMailRecipient[],
-  eventDocument: any
+  users: EmailRecipient[],
+  eventDocument: EventDocument,
+  clientDomain: string
 ): Promise<void> => {
-  const eventOptions: IEventEmailOptions = mapEventOptions(eventDocument);
+  const eventOptions: EventEmailOptions = mapEventOptions(
+    eventDocument,
+    clientDomain
+  );
 
   if (users.length === 0) {
-    // no subsriptions
     return;
   }
   sendEventCreationEmail(users, eventOptions);
 };
 
 export const notifyWeeklySubscribers = async (
-  users: IMailRecipient[],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  eventDocuments: any[]
+  users: EmailRecipient[],
+  eventDocuments: EventDocument[],
+  clientDomain: string
 ): Promise<void> => {
-  const options: IWeeklyOptions[] = eventDocuments.map((eventDocument: any) => {
-    const weekDay = format(new Date(eventDocument.date), 'EEEE', {
-      locale: fi,
-    });
-    const date = format(new Date(eventDocument.date), 'dd.MM.yyyy', {
-      locale: fi,
-    });
+  const options: IWeeklyOptions[] = eventDocuments.map(
+    (eventDocument: EventDocument) => {
+      const weekDay = format(new Date(eventDocument.date), 'EEEE', {
+        locale: fi,
+      });
+      const date = format(new Date(eventDocument.date), 'dd.MM.yyyy', {
+        locale: fi,
+      });
 
-    return {
-      ...mapEventOptions(eventDocument),
-      subtitle: eventDocument.subtitle,
-      weekDay,
-      date,
-      participantCount: eventDocument.participants.length,
-    };
-  });
+      return {
+        ...mapEventOptions(eventDocument, clientDomain),
+        subtitle: eventDocument.subtitle,
+        weekDay,
+        date,
+        participantCount: eventDocument.participants.length,
+      };
+    }
+  );
 
   sendWeeklyEmail(users, {
     eventOptions: options,
