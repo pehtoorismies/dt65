@@ -37,7 +37,7 @@ export const EventInput = inputObjectType({
     t.string('subtitle');
     t.boolean('race');
     t.string('type', { required: true });
-    t.string('date', { required: true });
+    t.date('date', { required: true });
     t.boolean('exactTime', { default: false });
     t.string('description');
   },
@@ -192,12 +192,12 @@ export const Mutation = objectType({
         { mongoose, sub, nickname: currentNickname }
       ) {
         const { EventModel } = mongoose;
-        const updatetable = filterUndefined({
+        const propsToUpdate = filterUndefined({
           name,
           nickname,
         });
 
-        const auth0User: UserProfile = await updateProfile(sub, updatetable);
+        const auth0User: UserProfile = await updateProfile(sub, propsToUpdate);
         console.log(`current: ${currentNickname} - updated: ${nickname}`);
         if (!nickname || currentNickname === nickname) {
           return auth0User;

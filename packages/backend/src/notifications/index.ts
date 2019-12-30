@@ -4,7 +4,7 @@ import { fi } from 'date-fns/locale';
 import { EVENT_TYPES } from '../constants';
 import { sendEventCreationEmail, sendWeeklyEmail } from '../mail';
 import {
-  EventDocument,
+  Event,
   EventEmailData,
   EmailRecipient,
   WeeklyEmailData,
@@ -13,7 +13,7 @@ import {
 import { findType } from '../util';
 
 const mapEventOptions = (
-  eventDocument: EventDocument,
+  eventDocument: Event,
   clientDomain: string
 ): EventEmailData => {
   const date = format(new Date(eventDocument.date), 'dd.MM.yyyy (EEEE)', {
@@ -25,7 +25,7 @@ const mapEventOptions = (
 
   return {
     title: eventDocument.title,
-    eventUrl: `${clientDomain}/events/${eventDocument._id}`,
+    eventUrl: `${clientDomain}/events/${eventDocument.id}`,
     creator: eventDocument.creator.nickname,
     date,
     typeHeader,
@@ -37,7 +37,7 @@ const mapEventOptions = (
 
 export const notifyEventCreationSubscribers = async (
   users: EmailRecipient[],
-  eventDocument: EventDocument,
+  eventDocument: Event,
   clientDomain: string
 ): Promise<void> => {
   const eventOptions: EventEmailData = mapEventOptions(
@@ -53,18 +53,23 @@ export const notifyEventCreationSubscribers = async (
 
 export const notifyWeeklySubscribers = async (
   users: EmailRecipient[],
-  eventDocuments: EventDocument[],
+  eventDocuments: Event[],
   clientDomain: string
 ): Promise<void> => {
   const weeklyEventData: WeeklyEventData[] = eventDocuments.map(
-    (eventDocument: EventDocument) => {
-      const weekDay = format(new Date(eventDocument.date), 'EEEE', {
+    (eventDocument: Event) => {
+      // const weekDay = format(new Date(eventDocument.date), 'EEEE', {
+      //   locale: fi,
+      // });
+      // const date = format(new Date(eventDocument.date), 'dd.MM.yyyy', {
+      //   locale: fi,
+      // });
+      const weekDay = format(eventDocument.date, 'EEEE', {
         locale: fi,
       });
-      const date = format(new Date(eventDocument.date), 'dd.MM.yyyy', {
+      const date = format(eventDocument.date, 'dd.MM.yyyy', {
         locale: fi,
       });
-
       return {
         ...mapEventOptions(eventDocument, clientDomain),
         subtitle: eventDocument.subtitle,

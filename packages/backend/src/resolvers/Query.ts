@@ -9,7 +9,7 @@ import {
 } from '../auth';
 import { NotFoundError } from '../errors';
 import { notifyWeeklySubscribers } from '../notifications';
-import { UserProfile } from '../types';
+import { UserProfile, MongooseContext, Dt65Event } from '../types';
 import { config } from '../config';
 
 export const Query = objectType({
@@ -35,7 +35,11 @@ export const Query = objectType({
       args: {
         limit: intArg({ default: 0 }),
       },
-      async resolve(_, { limit = 0 }, { mongoose }) {
+      async resolve(
+        _,
+        { limit = 0 }: { limit?: number },
+        { mongoose }: { mongoose: MongooseContext }
+      ) {
         const { EventModel } = mongoose;
 
         const events = await EventModel.find({ date: { $gte: startOfToday() } })
@@ -51,7 +55,7 @@ export const Query = objectType({
       args: {
         id: idArg({ required: true }),
       },
-      async resolve(_, { id }, { mongoose }) {
+      async resolve(_, { id }, { mongoose }: { mongoose: MongooseContext }) {
         const { EventModel } = mongoose;
         const event = await EventModel.findById(id);
         if (!event) {
@@ -73,7 +77,7 @@ export const Query = objectType({
 
     t.field('me', {
       type: 'User',
-      async resolve(_, __, { sub }) {
+      async resolve(_, __, { sub }: { sub: string }) {
         const me: UserProfile = await fetchMyProfile(sub);
         return me;
       },
@@ -81,14 +85,14 @@ export const Query = objectType({
 
     t.field('sendWeeklyEmail', {
       type: 'Boolean',
-      async resolve(_, __, { mongoose }) {
+      async resolve(_, __, { mongoose }: { mongoose: MongooseContext }) {
         const { EventModel } = mongoose;
+
         const now = new Date();
         const weekFromNow = addWeeks(now, 1);
         const search = {
           date: { $gte: now, $lte: weekFromNow },
         };
-
         const events = await EventModel.find(search).sort({ date: 1 });
         const weeklySubscribers = await fetchWeeklyEmailSubscribers();
         notifyWeeklySubscribers(weeklySubscribers, events, config.clientDomain);

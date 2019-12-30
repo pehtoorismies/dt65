@@ -1,6 +1,13 @@
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
 import { EVENT_ENUMS } from '../constants';
+
+export interface Event extends Document {
+  title: string;
+  type: string;
+  subtitle: string;
+  race: boolean;
+}
 
 const timestamps = {
   createdAt: 'createdAt',

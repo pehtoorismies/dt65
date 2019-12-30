@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { AuthenticationClient, ManagementClient, UserData } from 'auth0';
-import { map, pickAll, pipe } from 'ramda';
+import { AuthenticationClient, ManagementClient, User } from 'auth0';
+import { map, pickAll } from 'ramda';
 import { renameKeys } from 'ramda-adjunct';
 
 import { config } from '../config';
 import {
-  UserProfile,
-  ProfileUpdateProps,
   Auth0User,
   EmailRecipient,
+  ProfileUpdateProps,
   UserMetadata,
-  AppMetadata,
+  UserProfile,
 } from '../types';
 
 const { domain, clientId, clientSecret, jwtAudience } = config.auth;
 
 const getAuth0Management = async (): Promise<ManagementClient> => {
-  const management = new ManagementClient<AppMetadata, UserMetadata>({
+  const management = new ManagementClient({
     domain,
     clientId,
     clientSecret,
@@ -54,15 +53,15 @@ const loginAuth0User = async (
 };
 
 const AUTH_PROFILE_PROPS = [
-  'user_id',
+  'created_at',
   'email',
   'name',
   'nickname',
-  'username',
   'picture',
   'updated_at',
-  'created_at',
+  'user_id',
   'user_metadata',
+  'username',
 ];
 
 const RENAME_KEYS = {
@@ -72,38 +71,21 @@ const RENAME_KEYS = {
   user_metadata: 'preferences',
 };
 
-const format = pipe(pickAll(AUTH_PROFILE_PROPS), renameKeys(RENAME_KEYS));
-
-const toUserFormat = (fromAuth0: any): UserProfile => {
-  return format(fromAuth0);
+const toUserProfile = (user: User): UserProfile => {
+  const props = pickAll<User, object>(AUTH_PROFILE_PROPS, user);
+  return renameKeys(RENAME_KEYS, props) as UserProfile;
 };
 
-const formatUsers = pipe(
-  map(pickAll(AUTH_PROFILE_PROPS)),
-  map((up: any) => {
-    if (!up.preferences) {
-      return {
-        ...up,
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        user_metadata: {
-          subscribeEventCreationEmail: 'true',
-          subscribeWeeklyEmail: 'true',
-        },
-      };
-    } else {
-      return up;
-    }
-  }),
-  map(renameKeys(RENAME_KEYS))
-);
+const toUserProfiles = (users: User[]): UserProfile[] =>
+  map(toUserProfile, users);
 
 const updateProfile = async (
   auth0UserId: string,
-  updateable: ProfileUpdateProps
+  propsToUpdate: ProfileUpdateProps
 ): Promise<UserProfile> => {
   const management = await getAuth0Management();
-  const user = await management.updateUser({ id: auth0UserId }, updateable);
-  return toUserFormat(user);
+  const user = await management.updateUser({ id: auth0UserId }, propsToUpdate);
+  return toUserProfile(user);
 };
 
 const updateUserMetadata = async (
@@ -115,27 +97,29 @@ const updateUserMetadata = async (
   const user = await management.updateUser(
     { id: auth0UserId },
     {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       user_metadata: {
         ...userMetadata,
       },
     }
   );
-  return toUserFormat(user);
+  return toUserProfile(user);
 };
 
 const fetchMyProfile = async (auth0Id: string): Promise<UserProfile> => {
   const management = await getAuth0Management();
 
-  const user = await management.getUser({ id: auth0Id });
-  return toUserFormat(user);
+  const user = await management.getUser({
+    id: auth0Id,
+  });
+
+  return toUserProfile(user);
 };
 
 const fetchUsers = async (): Promise<UserProfile[]> => {
   const management = await getAuth0Management();
 
-  const usersResp: Array<any> = await management.getUsers();
-  const userList: UserProfile[] = formatUsers(usersResp);
+  const users = await management.getUsers();
+  const userList: UserProfile[] = toUserProfiles(users);
   return userList;
 };
 
@@ -154,7 +138,7 @@ const createAuth0User = async (user: Auth0User): Promise<UserProfile> => {
     app_metadata: { role: 'USER' },
   });
 
-  return toUserFormat(auth0User);
+  return toUserProfile(auth0User);
 };
 
 const AUTH0_QUERY_BASE = {
@@ -162,21 +146,15 @@ const AUTH0_QUERY_BASE = {
   search_engine: 'v3',
 };
 
-const pickMailRecipientFields = (
-  users: UserData<AppMetadata, UserMetadata>[]
-): EmailRecipient[] => {
+const pickMailRecipientFields = (users: User[]): EmailRecipient[] => {
   return users
     .map(
-      (u: UserData): EmailRecipient => {
-        return {
-          name: u.name || '',
-          email: u.email || '',
-        };
-      }
+      (u: User): EmailRecipient => ({
+        name: u.name || '',
+        email: u.email || '',
+      })
     )
-    .filter((u: EmailRecipient) => {
-      return !!u.email;
-    });
+    .filter((u: EmailRecipient) => !!u.email);
 };
 
 const fetchCreateEventSubscribers = async (): Promise<EmailRecipient[]> => {
@@ -184,7 +162,7 @@ const fetchCreateEventSubscribers = async (): Promise<EmailRecipient[]> => {
 
   try {
     const q = `user_metadata.subscribeEventCreationEmail:true`;
-    const users: UserData<any, UserMetadata>[] = await management.getUsers({
+    const users = await management.getUsers({
       ...AUTH0_QUERY_BASE,
       q,
     });
@@ -201,10 +179,7 @@ const fetchWeeklyEmailSubscribers = async (): Promise<EmailRecipient[]> => {
 
   try {
     const q = `user_metadata.subscribeWeeklyEmail:true`;
-    const users: UserData<
-      any,
-      IAuth0UserMetaData
-    >[] = await management.getUsers({
+    const users = await management.getUsers({
       ...AUTH0_QUERY_BASE,
       q,
     });
@@ -243,14 +218,14 @@ const requestChangePasswordEmail = (email: string): boolean => {
 
 export {
   createAuth0User,
+  fetchCreateEventSubscribers,
+  fetchMyProfile,
+  fetchNickname,
+  fetchUsers,
+  fetchWeeklyEmailSubscribers,
   loginAuth0User,
   requestChangePasswordEmail,
-  fetchUsers,
-  fetchMyProfile,
-  toUserFormat,
-  updateUserMetadata,
+  toUserProfile,
   updateProfile,
-  fetchCreateEventSubscribers,
-  fetchWeeklyEmailSubscribers,
-  fetchNickname,
+  updateUserMetadata,
 };

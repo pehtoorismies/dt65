@@ -11,6 +11,7 @@ import {
   permissions,
   requestScopes,
 } from './middleware';
+import { EventModel } from './types';
 
 const { mongoUrl } = config;
 
@@ -42,7 +43,7 @@ const startServer = (): void => {
     context: request => ({
       ...request,
       mongoose: {
-        EventModel: model('Event', EventSchema),
+        EventModel: model<EventModel>('Event', EventSchema),
         connection,
       },
     }),

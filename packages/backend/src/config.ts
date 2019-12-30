@@ -17,7 +17,7 @@ const auth: Auth0Config = {
 
 const mailgun: MailgunConfig = {
   domain: process.env.MAILGUN_DOMAIN || 'wrongDomain',
-  apiKey: process.env.MAILGUN_API_KEY || 'wrongApikey',
+  apiKey: process.env.MAILGUN_API_KEY || 'wrongApiKey',
   fromMail: process.env.MAILGUN_FROM || 'Kyttäki <hello@downtown65.com>',
   host: process.env.MAILGUN_HOST || 'api.mailgun.net',
 };

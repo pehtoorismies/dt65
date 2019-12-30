@@ -1,3 +1,5 @@
+import { Connection, Model, Document } from 'mongoose';
+
 export interface Auth0Config {
   domain: string;
   clientId: string;
@@ -35,7 +37,7 @@ export interface EventEmailData {
 
 export interface WeeklyEventData extends EventEmailData {
   participantCount: number;
-  subtitle: string;
+  subtitle?: string;
   weekDay: string;
 }
 export interface WeeklyEmailData {
@@ -56,8 +58,8 @@ export interface Auth0User {
 }
 
 export interface UserMetadata {
-  subscribeEventCreationEmail: string;
-  subscribeWeeklyEmail: string;
+  subscribeEventCreationEmail: boolean;
+  subscribeWeeklyEmail: boolean;
 }
 export interface AppMetadata {
   role: string;
@@ -76,20 +78,63 @@ export interface UserProfile {
 }
 
 export interface ProfileUpdateProps {
-  name?: string | null;
-  username?: string | null;
-  nickname?: string | null;
+  name?: string;
+  username: string;
+  nickname: string;
 }
 
-export interface EventDocument {
-  _id: string;
-  title: string;
-  date: string;
-  type: string;
-  subtitle: string;
-  creator: {
-    nickname: string;
-  };
+// export interface EventDocument {
+//   _id: string;
+//   title: string;
+//   date: string;
+//   type: string;
+//   subtitle: string;
+//   creator: {
+//     nickname: string;
+//   };
+//   description?: string;
+//   participants: {}[];
+// }
+
+export interface SimpleUser {
+  username?: string;
+  nickname: string;
+  sub: string;
+}
+
+// interface BaseEvent {
+//   id: string;
+//   createdAt: Date;
+//   creator: SimpleUser;
+//   date: Date;
+//   description?: string;
+//   exactTime: boolean;
+//   participants: SimpleUser[];
+//   race: boolean;
+//   subtitle?: string;
+//   title: string;
+//   type: string;
+//   updatedAt: Date;
+// }
+
+export interface Event {
+  id: string;
+  createdAt: Date;
+  creator: SimpleUser;
+  date: Date;
   description?: string;
-  participants: {}[];
+  exactTime: boolean;
+  participants: SimpleUser[];
+  race: boolean;
+  subtitle?: string;
+  title: string;
+  type: string;
+  updatedAt: Date;
+}
+
+export type EventModel = Event & Document;
+
+export interface MongooseContext {
+  connection: Connection;
+  EventModel: Model<EventModel>;
 }
