@@ -1504,9 +1504,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@types/auth0@^2.9.19":
-  version "2.9.23"
-  resolved "https://registry.yarnpkg.com/@types/auth0/-/auth0-2.9.23.tgz#f48587d6e6bc40b79da7d73613d5e556fdc21756"
+"@types/auth0@^2.20.0":
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/@types/auth0/-/auth0-2.20.0.tgz#a1bcec373c30e4b19c243c99d6c1b90c647fedf6"
+  integrity sha512-dIb3VeVD6fSrGMUBWVHcb4N4trxC8BfSNkzqpafhhwsXDiJgeb4GQTqN4b+7Pafyq7vRVpeOoaS4gq9ovT+YwQ==
 
 "@types/aws-lambda@8.10.13":
   version "8.10.13"
@@ -1595,6 +1596,7 @@
 "@types/express-jwt@0.0.42":
   version "0.0.42"
   resolved "https://registry.yarnpkg.com/@types/express-jwt/-/express-jwt-0.0.42.tgz#4f04e1fadf9d18725950dc041808a4a4adf7f5ae"
+  integrity sha512-WszgUddvM1t5dPpJ3LhWNH8kfNN8GPIBrAGxgIYXVCEGx6Bx4A036aAuf/r5WH9DIEdlmp7gHOYvSM6U87B0ag==
   dependencies:
     "@types/express" "*"
     "@types/express-unless" "*"
@@ -1609,6 +1611,7 @@
 "@types/express-unless@*":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@types/express-unless/-/express-unless-0.5.1.tgz#4f440b905e42bbf53382b8207bc337dc5ff9fd1f"
+  integrity sha512-5fuvg7C69lemNgl0+v+CUxDYWVPSfXHhJPst4yTLcqi4zKJpORCxnDrnnilk3k0DTq/WrAUdvXFs01+vUqUZHw==
   dependencies:
     "@types/express" "*"
 
@@ -2374,9 +2377,10 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-auth0@^2.18.0:
+auth0@^2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/auth0/-/auth0-2.20.0.tgz#abb250b4f70a3a845fa93115bbce3b1910f97897"
+  integrity sha512-l39HEv1LZt7kyXGDe012SRbr+dakLQifpezsj9cNIJJJWW1idCIQsIm+sg3sJgXF6vJicWlYgaHz/erjBHjVPw==
   dependencies:
     bluebird "^3.5.5"
     jsonwebtoken "^8.5.1"
@@ -2819,6 +2823,7 @@ camel-case@3.0.x:
 camel-case@^1.1.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-1.2.2.tgz#1aca7c4d195359a2ce9955793433c6e5542511f2"
+  integrity sha1-Gsp8TRlTWaLOmVV5NDPG5VQlEfI=
   dependencies:
     sentence-case "^1.1.1"
     upper-case "^1.1.1"
@@ -2880,6 +2885,7 @@ chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.
 change-case@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/change-case/-/change-case-2.3.1.tgz#2c4fde3f063bb41d00cd68e0d5a09db61cbe894f"
+  integrity sha1-LE/ePwY7tB0AzWjg1aCdthy+iU8=
   dependencies:
     camel-case "^1.1.1"
     constant-case "^1.1.0"
@@ -3209,6 +3215,7 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
 constant-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/constant-case/-/constant-case-1.1.2.tgz#8ec2ca5ba343e00aa38dbf4e200fd5ac907efd63"
+  integrity sha1-jsLKW6ND4Aqjjb9OIA/VrJB+/WM=
   dependencies:
     snake-case "^1.1.0"
     upper-case "^1.1.1"
@@ -3324,6 +3331,7 @@ cookie@0.4.0:
 cookiejar@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
+  integrity sha512-Mw+adcfzPxcPeI+0WlvRrr/3lGVO0bD75SxX6811cxSh1Wbxx7xZBGK1eVtDf6si8rg2lhnUjsVLMFMfbRIuwA==
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -3616,6 +3624,7 @@ deep-is@~0.1.3:
 deepmerge@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  integrity sha512-GRQOafGHwMHpjPx9iCvTgpu9NojZ49q794EEL94JVEw6VaeA8XTUyBKvAkOOjBX9oJNiV6G3P+T+tihFjo2TqA==
 
 default-gateway@^4.2.0:
   version "4.2.0"
@@ -3864,6 +3873,7 @@ domutils@^1.5.1:
 dot-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/dot-case/-/dot-case-1.1.2.tgz#1e73826900de28d6de5480bc1de31d0842b06bec"
+  integrity sha1-HnOCaQDeKNbeVIC8HeMdCEKwa+w=
   dependencies:
     sentence-case "^1.1.2"
 
@@ -4675,6 +4685,7 @@ form-data@~2.3.2:
 formidable@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.1.tgz#70fb7ca0290ee6ff961090415f4b3df3d2082659"
+  integrity sha512-Fs9VRguL0gqGHkXS5GQiMCr1VhZBxz0JnJs4JmMp/2jL18Fmbzvv7vOFRU+U8TBkHEE/CX1qDXzJplVULgsLeg==
 
 forwarded@~0.1.2:
   version "0.1.2"
@@ -5760,6 +5771,7 @@ is-installed-globally@^0.1.0:
 is-lower-case@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/is-lower-case/-/is-lower-case-1.1.3.tgz#7e147be4768dc466db3bfb21cc60b31e6ad69393"
+  integrity sha1-fhR75HaNxGbbO/shzGCzHmrWk5M=
   dependencies:
     lower-case "^1.1.0"
 
@@ -5880,6 +5892,7 @@ is-typedarray@~1.0.0:
 is-upper-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/is-upper-case/-/is-upper-case-1.1.2.tgz#8d0b1fa7e7933a1e58483600ec7d9661cbaf756f"
+  integrity sha1-jQsfp+eTOh5YSDYA7H2WYcuvdW8=
   dependencies:
     upper-case "^1.1.0"
 
@@ -6457,6 +6470,7 @@ jwa@^1.4.1:
 jwks-rsa@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/jwks-rsa/-/jwks-rsa-1.6.0.tgz#d36356398a67619b237becfe8f2db2b66829b10f"
+  integrity sha512-gLhpd7Ka7Jy8ofm9OVj0PFPtSdx3+W2dncF3UCA1wDTAbvfiB1GhHbbyQlz8bqLF5+rge7pgD/DALRfgZi8Fgg==
   dependencies:
     "@types/express-jwt" "0.0.42"
     debug "^2.6.9"
@@ -6569,6 +6583,7 @@ lightercollective@^0.3.0:
 limiter@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/limiter/-/limiter-1.1.4.tgz#87c9c3972d389fdb0ba67a45aadbc5d2f8413bc1"
+  integrity sha512-XCpr5bElgDI65vVgstP8TWjv6/QKWm9GU5UG0Pr5sLQ3QLo8NVKsioe+Jed5/3vFOe3IQuqE7DKwTvKQkjTHvg==
 
 lines-and-columns@^1.1.6:
   version "1.1.6"
@@ -6647,6 +6662,7 @@ locate-path@^5.0.0:
 lock@~0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/lock/-/lock-0.1.4.tgz#fec7deaef17e7c3a0a55e1da042803e25d91745d"
+  integrity sha1-/sfervF+fDoKVeHaBCgD4l2RdF0=
 
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"
@@ -6822,6 +6838,7 @@ loud-rejection@^1.0.0:
 lower-case-first@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/lower-case-first/-/lower-case-first-1.0.2.tgz#e5da7c26f29a7073be02d52bac9980e5922adfa1"
+  integrity sha1-5dp8JvKacHO+AtUrrJmA5ZIq36E=
   dependencies:
     lower-case "^1.1.2"
 
@@ -6850,6 +6867,7 @@ lru-cache@^5.1.1:
 lru-cache@~4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.0.2.tgz#1d17679c069cda5d040991a09dbc2c0db377e55e"
+  integrity sha1-HRdnnAac2l0ECZGgnbwsDbN35V4=
   dependencies:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
@@ -6857,6 +6875,7 @@ lru-cache@~4.0.0:
 lru-memoizer@^1.12.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/lru-memoizer/-/lru-memoizer-1.13.0.tgz#1469529911602c13df43bca6730640b96072fac8"
+  integrity sha512-q0wMolfI7yimhZ36kBAfMLOIuDBpRkieN9do0YPjSzCaiy6r73s8wOEq7Ue/B95VSRbXzfnOr1O1QdJc5UIqaw==
   dependencies:
     lock "~0.1.2"
     lodash "^4.17.4"
@@ -6866,6 +6885,7 @@ lru-memoizer@^1.12.0:
 lru-memoizer@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/lru-memoizer/-/lru-memoizer-2.0.1.tgz#f21e015bb6856483f574070be11ca16b0c010693"
+  integrity sha512-kGl+zlIqdQL24f0Q9IUSUZeSvA7nqXPFLA7suFh00v4KVqfXkZJtkPfTfXV/oQMSPfNr6VT4xGkRAUPhFnGyxQ==
   dependencies:
     lodash.clonedeep "^4.5.0"
     lru-cache "~4.0.0"
@@ -8262,6 +8282,7 @@ param-case@2.1.x:
 param-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-1.1.2.tgz#dcb091a43c259b9228f1c341e7b6a44ea0bf9743"
+  integrity sha1-3LCRpDwlm5Io8cNB57akTqC/l0M=
   dependencies:
     sentence-case "^1.1.2"
 
@@ -8339,6 +8360,7 @@ parseurl@~1.3.2, parseurl@~1.3.3:
 pascal-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/pascal-case/-/pascal-case-1.1.2.tgz#3e5d64a20043830a7c49344c2d74b41be0c9c99b"
+  integrity sha1-Pl1kogBDgwp8STRMLXS0G+DJyZs=
   dependencies:
     camel-case "^1.1.1"
     upper-case-first "^1.1.0"
@@ -8354,6 +8376,7 @@ path-browserify@0.0.1:
 path-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/path-case/-/path-case-1.1.2.tgz#50ce6ba0d3bed3dd0b5c2a9c4553697434409514"
+  integrity sha1-UM5roNO+090LXCqcRVNpdDRAlRQ=
   dependencies:
     sentence-case "^1.1.2"
 
@@ -8691,6 +8714,7 @@ qs@6.7.0:
 qs@^6.5.1:
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.1.tgz#20082c65cb78223635ab1a9eaca8875a29bf8ec9"
+  integrity sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==
 
 qs@~6.5.2:
   version "6.5.2"
@@ -9194,6 +9218,7 @@ resolve@^1.0.0, resolve@^1.10.0, resolve@^1.11.0, resolve@^1.3.2, resolve@^1.5.0
 rest-facade@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/rest-facade/-/rest-facade-1.12.0.tgz#e6a25958b34bab2323af5a953c0135ac2684d371"
+  integrity sha512-LsrzWP+aAy8LWwAi1ZshecO7nOWWZB9bB4gJTwXLl5DS40D5vmmdupKvqEcz8m0GUybLI3uJX8bofJtSrs5Acw==
   dependencies:
     change-case "^2.3.0"
     deepmerge "^3.2.0"
@@ -9383,6 +9408,7 @@ send@0.17.1:
 sentence-case@^1.1.1, sentence-case@^1.1.2:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/sentence-case/-/sentence-case-1.1.3.tgz#8034aafc2145772d3abe1509aa42c9e1042dc139"
+  integrity sha1-gDSq/CFFdy06vhUJqkLJ4QQtwTk=
   dependencies:
     lower-case "^1.1.1"
 
@@ -9520,6 +9546,7 @@ smart-buffer@^4.1.0:
 snake-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/snake-case/-/snake-case-1.1.2.tgz#0c2f25e305158d9a18d3d977066187fef8a5a66a"
+  integrity sha1-DC8l4wUVjZoY09l3BmGH/vilpmo=
   dependencies:
     sentence-case "^1.1.2"
 
@@ -9936,6 +9963,7 @@ subscriptions-transport-ws@^0.9.8:
 superagent-proxy@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/superagent-proxy/-/superagent-proxy-2.0.0.tgz#9f57515cd660e2e9ce55c0e6bd70f92eb07c3ee0"
+  integrity sha512-TktJma5jPdiH1BNN+reF/RMW3b8aBTCV7KlLFV0uYcREgNf3pvo7Rdt564OcFHwkGb3mYEhHuWPBhSbOwiNaYw==
   dependencies:
     debug "^3.1.0"
     proxy-agent "3"
@@ -9943,6 +9971,7 @@ superagent-proxy@^2.0.0:
 superagent@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
+  integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
   dependencies:
     component-emitter "^1.2.0"
     cookiejar "^2.1.0"
@@ -9970,6 +9999,7 @@ supports-color@^5.3.0, supports-color@^5.5.0:
 swap-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/swap-case/-/swap-case-1.1.2.tgz#c39203a4587385fad3c850a0bd1bcafa081974e3"
+  integrity sha1-w5IDpFhzhfrTyFCgvRvK+ggZdOM=
   dependencies:
     lower-case "^1.1.1"
     upper-case "^1.1.1"
@@ -10128,6 +10158,7 @@ timers-browserify@^2.0.4:
 title-case@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/title-case/-/title-case-1.1.2.tgz#fae4a6ae546bfa22d083a0eea910a40d12ed4f5a"
+  integrity sha1-+uSmrlRr+iLQg6DuqRCkDRLtT1o=
   dependencies:
     sentence-case "^1.1.1"
     upper-case "^1.0.3"
@@ -10475,6 +10506,7 @@ update-notifier@^2.5.0:
 upper-case-first@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-1.1.2.tgz#5d79bedcff14419518fd2edb0a0507c9b6859115"
+  integrity sha1-XXm+3P8UQZUY/S7bCgUHybaFkRU=
   dependencies:
     upper-case "^1.1.1"
 
@@ -10595,6 +10627,7 @@ verror@1.10.0:
 very-fast-args@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/very-fast-args/-/very-fast-args-1.1.0.tgz#e16d1d1faf8a6e596a246421fd90a77963d0b396"
+  integrity sha1-4W0dH6+KbllqJGQh/ZCneWPQs5Y=
 
 vm-browserify@^1.0.1:
   version "1.1.2"

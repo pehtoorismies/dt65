@@ -5,16 +5,17 @@ import { EVENT_TYPES } from '../constants';
 import { sendEventCreationEmail, sendWeeklyEmail } from '../mail';
 import {
   EventDocument,
-  EventEmailContent,
+  EventEmailData,
   EmailRecipient,
-  WeeklyEmailContent,
+  WeeklyEmailData,
+  WeeklyEventData,
 } from '../types';
 import { findType } from '../util';
 
 const mapEventOptions = (
   eventDocument: EventDocument,
   clientDomain: string
-): EventEmailContent => {
+): EventEmailData => {
   const date = format(new Date(eventDocument.date), 'dd.MM.yyyy (EEEE)', {
     locale: fi,
   });
@@ -39,7 +40,7 @@ export const notifyEventCreationSubscribers = async (
   eventDocument: EventDocument,
   clientDomain: string
 ): Promise<void> => {
-  const eventOptions: EventEmailContent = mapEventOptions(
+  const eventOptions: EventEmailData = mapEventOptions(
     eventDocument,
     clientDomain
   );
@@ -55,7 +56,7 @@ export const notifyWeeklySubscribers = async (
   eventDocuments: EventDocument[],
   clientDomain: string
 ): Promise<void> => {
-  const weeklyContents: WeeklyEmailContent[] = eventDocuments.map(
+  const weeklyEventData: WeeklyEventData[] = eventDocuments.map(
     (eventDocument: EventDocument) => {
       const weekDay = format(new Date(eventDocument.date), 'EEEE', {
         locale: fi,
@@ -74,10 +75,10 @@ export const notifyWeeklySubscribers = async (
     }
   );
 
-  const content: WeeklyEmailContent = {
-    eventOptions: weeklyContents,
+  const data: WeeklyEmailData = {
+    weeklyEventData: weeklyEventData,
     preferencesUrl: `${clientDomain}/preferences`,
   };
 
-  sendWeeklyEmail(users, content);
+  sendWeeklyEmail(users, data);
 };

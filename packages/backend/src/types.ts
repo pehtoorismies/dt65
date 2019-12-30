@@ -22,25 +22,25 @@ export interface EventType {
   title: string;
 }
 
-export interface EventEmailContent {
+export interface EventEmailData {
+  creator: string;
+  date: string;
+  description: string;
+  eventUrl: string;
+  preferencesUrl: string;
   title: string;
   type: string;
   typeHeader: string;
-  date: string;
-  eventUrl: string;
-  preferencesUrl: string;
-  creator: string;
-  description: string;
 }
 
-export interface WeeklyEventContent extends EventEmailContent {
-  weekDay: string;
+export interface WeeklyEventData extends EventEmailData {
   participantCount: number;
   subtitle: string;
+  weekDay: string;
 }
-export interface WeeklyEmailContent {
-  eventOptions: WeeklyEventContent[];
+export interface WeeklyEmailData {
   preferencesUrl: string;
+  weeklyEventData: WeeklyEventData[];
 }
 
 export interface EmailTemplate {
