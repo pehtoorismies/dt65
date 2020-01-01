@@ -1,10 +1,10 @@
 /* cSpell:disable */
 
 import { createEventMail, createWeeklyEmail } from '../email-template';
-import { EventEmailContent, WeeklyEmailOptions } from '../../types';
+import { EventEmailData, WeeklyEmailData } from '../../types';
 
 test('Creation email', async () => {
-  const options: EventEmailContent = {
+  const options: EventEmailData = {
     title: 'some title',
     type: 'skiing',
     typeHeader: 'Hiihto',
@@ -19,19 +19,19 @@ test('Creation email', async () => {
     preferencesUrl: 'do_not_care',
   };
 
-  const data = await createEventMail(options);
-  expect(data.mjmlText).toMatch(/<mjml>/);
-  expect(data.mjmlText).toMatch(/some title/);
-  expect(data.mjmlText).toMatch(/skiing/);
-  expect(data.mjmlText).toMatch(/Hiihto/);
-  expect(data.mjmlText).toMatch(/metsäsika/);
-  expect(data.mjmlText).toMatch(/<ol>/);
-  expect(data.plainText).toMatch(/Kippis,/);
+  const template = await createEventMail(options);
+  expect(template.mjmlText).toMatch(/<mjml>/);
+  expect(template.mjmlText).toMatch(/some title/);
+  expect(template.mjmlText).toMatch(/skiing/);
+  expect(template.mjmlText).toMatch(/Hiihto/);
+  expect(template.mjmlText).toMatch(/metsäsika/);
+  expect(template.mjmlText).toMatch(/<ol>/);
+  expect(template.plainText).toMatch(/Kippis,/);
 });
 
-test('Creation email', async () => {
-  const options: WeeklyEmailOptions = {
-    eventOptions: [
+test('Weekly email', async () => {
+  const options: WeeklyEmailData = {
+    weeklyEventData: [
       {
         title: 'some title',
         type: 'skiing',
@@ -62,16 +62,16 @@ test('Creation email', async () => {
     preferencesUrl: 'some_url',
   };
 
-  const data = await createWeeklyEmail(options);
-  expect(data.mjmlText).toMatch(/<mjml>/);
-  expect(data.mjmlText).toMatch(/some title/);
-  expect(data.mjmlText).toMatch(/skiing/);
-  expect(data.mjmlText).toMatch(/Hiihto/);
-  expect(data.mjmlText).toMatch(/tiistai/);
+  const template = await createWeeklyEmail(options);
+  expect(template.mjmlText).toMatch(/<mjml>/);
+  expect(template.mjmlText).toMatch(/some title/);
+  expect(template.mjmlText).toMatch(/skiing/);
+  expect(template.mjmlText).toMatch(/Hiihto/);
+  expect(template.mjmlText).toMatch(/tiistai/);
 
-  expect(data.mjmlText).toMatch(/some title/);
-  expect(data.mjmlText).toMatch(/orienteering/);
+  expect(template.mjmlText).toMatch(/some title/);
+  expect(template.mjmlText).toMatch(/orienteering/);
 
-  expect(data.mjmlText).toMatch(/Suunnistus/);
-  expect(data.mjmlText).toMatch(/Hiihto/);
+  expect(template.mjmlText).toMatch(/Suunnistus/);
+  expect(template.mjmlText).toMatch(/Hiihto/);
 });

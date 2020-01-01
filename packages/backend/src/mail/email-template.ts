@@ -1,19 +1,21 @@
+/* cSpell:disable */
 import nunjucks from 'nunjucks';
 import { map } from 'ramda';
+
 import eventCreatedMjmlTemplate from './templates/event-created.mjml';
 import weeklyEmailMjmlTemplate from './templates/weekly-email.mjml';
 import {
   EmailTemplate,
-  EventEmailContent,
-  WeeklyEventContent,
-  WeeklyEmailContent,
+  EventEmailData,
+  WeeklyEventData,
+  WeeklyEmailData,
 } from '../types';
 
 const createEventMail = async (
-  content: EventEmailContent
+  data: EventEmailData
 ): Promise<EmailTemplate> => {
-  const { title, type, date, eventUrl, creator, description } = content;
-  const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, content);
+  const { title, type, date, eventUrl, creator, description } = data;
+  const mjmlText = nunjucks.renderString(eventCreatedMjmlTemplate, data);
 
   const plainText = `
     Kippis, 
@@ -36,25 +38,25 @@ const createEventMail = async (
   };
 };
 
-const createWeeklyEvent = (content: WeeklyEventContent): string =>
+const createWeeklyEvent = (data: WeeklyEventData): string =>
   `
     ---
-    ${content.title}
-    ${content.subtitle}
-    ${content.weekDay} ${content.date}
+    ${data.title}
+    ${data.subtitle}
+    ${data.weekDay} ${data.date}
 
-    Tarkastele tapahtumaa: ${content.eventUrl}
+    Tarkastele tapahtumaa: ${data.eventUrl}
     
   `;
 
 const createWeeklyEmail = async (
-  options: WeeklyEmailContent
+  options: WeeklyEmailData
 ): Promise<EmailTemplate> => {
   const mjmlText = nunjucks.renderString(weeklyEmailMjmlTemplate, options);
   const plainText = `
     Kippis, 
 
-    ${map(createWeeklyEvent, options.eventOptions)}
+    ${map(createWeeklyEvent, options.weeklyEventData)}
   
     Admin terveisin, 
     Kyttäki

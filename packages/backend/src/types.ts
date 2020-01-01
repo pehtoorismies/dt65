@@ -79,8 +79,8 @@ export interface UserProfile {
 
 export interface ProfileUpdateProps {
   name?: string;
-  username: string;
-  nickname: string;
+  username?: string;
+  nickname?: string;
 }
 
 // export interface EventDocument {

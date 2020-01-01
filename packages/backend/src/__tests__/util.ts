@@ -26,11 +26,9 @@ test('recipientVariables', () => {
 test('filterUndefined', () => {
   const me1 = { name: 'koira', nickname: 'sika' };
   const me2 = { name: 'koira', nickname: undefined };
-  const me3 = { name: 'koira', nickname: null };
   expect(dequal(filterUndefined(me1), me1)).toBeTruthy();
 
   const filtered2 = filterUndefined(me2);
   expect(dequal(filtered2, me2)).toBeFalsy();
   expect(filtered2.nickname).toBeUndefined();
-  expect(filterUndefined(me3).nickname).toBeUndefined();
 });

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { toUserFormat } from '..';
+import { toUserProfile } from '..';
 import { UserProfile } from '../../types';
 
 test('emailList', () => {
@@ -33,7 +33,7 @@ test('emailList', () => {
     },
   };
 
-  const formatted: UserProfile = toUserFormat(auth0User);
+  const formatted: UserProfile = toUserProfile(auth0User);
 
   expect(formatted.createdAt).toBe('2019-10-07T07:31:26.868Z');
   expect(formatted.preferences.subscribeEventCreationEmail).toBe(true);
