@@ -130,10 +130,18 @@ functions:
 #       Value: "Some output value"
 custom:
   dynamodb:
-    start:
-      migrate: true
     stages:
       - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
   dynamo:
     endpoints:
       url: 'http://localhost:8000'

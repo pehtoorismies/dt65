@@ -89,17 +89,17 @@ export interface SimpleUser {
 
 export interface Event {
   id: string;
-  createdAt: Date;
-  creator: SimpleUser;
-  date: Date;
-  description?: string;
-  exactTime: boolean;
-  participants: SimpleUser[];
-  race: boolean;
-  subtitle?: string;
+  // createdAt: Date;
+  // creator: SimpleUser;
+  // date: Date;
+  // description?: string;
+  // exactTime: boolean;
+  // participants: SimpleUser[];
+  // race: boolean;
+  // subtitle?: string;
   title: string;
-  type: string;
-  updatedAt: Date;
+  // type: string;
+  // updatedAt: Date;
 }
 
 export interface InputEvent {

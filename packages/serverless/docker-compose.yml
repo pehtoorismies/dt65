@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   dynamo:
@@ -6,3 +6,5 @@ services:
     entrypoint: java
     command: '-jar DynamoDBLocal.jar -sharedDb'
     restart: always
+    ports:
+      - '8000:8000'

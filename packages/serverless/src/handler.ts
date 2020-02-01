@@ -1,7 +1,8 @@
-import * as AWS from 'aws-sdk';
+import { DynamoDB, Endpoint } from 'aws-sdk';
 import { makeExecutableSchema } from 'graphql-tools';
 import { GraphQLServerLambda } from 'graphql-yoga';
 import { mergeAll } from 'ramda';
+import { DynamoDBAdapter } from './dynamo-adapter';
 import {
   resolvers as dateTimeResolvers,
   typeDefs as DateTime,
@@ -10,35 +11,58 @@ import {
   resolvers as eventResolvers,
   typeDefs as Event,
 } from './resolvers/event';
-import {
-  resolvers as queryResolvers,
-  typeDefs as Query,
-} from './resolvers/query';
+
+console.log('ONLINE', process.env.IS_OFFLINE);
 
 const IS_OFFLINE = process.env.IS_OFFLINE;
 // const CONFIG_EVENTS_TABLE = process.env.CONFIG_EVENTS_TABLE;
 const CONFIG_DYNAMODB_ENDPOINT = process.env.CONFIG_DYNAMODB_ENDPOINT;
 
-const initDynamo = (isLocal: boolean) => {
-  if (isLocal) {
-    return new AWS.DynamoDB.DocumentClient({
-      region: 'localhost',
-      endpoint: CONFIG_DYNAMODB_ENDPOINT,
-    });
+const Query = `
+  type Query {
+    _empty: String
   }
-  return new AWS.DynamoDB.DocumentClient();
+`;
+const Mutation = `
+  type Mutation {
+    _empty: String
+  }
+`;
+
+const initDynamo = (isLocal: boolean) => {
+  console.log('IS LOCAL', isLocal);
+  if (isLocal) {
+    return new DynamoDBAdapter(
+      new DynamoDB({
+        apiVersion: '2012-08-10',
+        region: 'eu-central-1',
+        endpoint: 'http://localhost:8000',
+        credentials: {
+          accessKeyId: 'none',
+          secretAccessKey: 'none',
+        },
+      })
+    );
+  }
+
+  return new DynamoDBAdapter(
+    new DynamoDB({
+      apiVersion: '2012-08-10',
+      region: 'eu-central-1',
+    })
+  );
 };
 
-const dynamoDB = initDynamo(IS_OFFLINE == 'true');
+const dynamoDBAdapter: DynamoDBAdapter = initDynamo(true);
 
 const lambda = new GraphQLServerLambda({
   context: request => ({
     ...request,
-    dynamoDB,
+    dynamoDBAdapter,
   }),
   schema: makeExecutableSchema({
-    typeDefs: [Query, Event, DateTime],
-    resolvers: mergeAll([queryResolvers, eventResolvers, dateTimeResolvers]),
+    typeDefs: [Query, Mutation, Event, DateTime],
+    resolvers: mergeAll([eventResolvers, dateTimeResolvers]),
   }),
 });
 

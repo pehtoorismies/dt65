@@ -1,22 +1,16 @@
 import { Event, InputEvent } from '../types';
-import * as AWS from 'aws-sdk';
-import { uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
+import { DynamoDBAdapter } from '../dynamo-adapter';
+import isEmpty from 'ramda/es/isEmpty';
 
 export const typeDefs = `
   type Event {
     id: String!
-    createdAt: DateTime! 
     title: String!
   }
 
   input EventData {
-    date: String!
-    description: String
-    exactTime: Boolean = false
-    race: Boolean
-    subtitle: String
     title: String!
-    type: String!
   }
   
   enum EventType {
@@ -35,37 +29,52 @@ export const typeDefs = `
     Triathlon
     Ultras
   }
-
-  createEvent(addMe: Boolean = false, event: EventData!, notifySubscribers: Boolean = true): Event!
+  extend type Mutation {
+    createEvent(addMe: Boolean = false, event: EventData!, notifySubscribers: Boolean = true): Event!
+  }
+  extend type Query {
+    findEvent(id: String!): Event
+  }
 `;
 
 export const resolvers = {
   Mutation: {
-    createEvent: (
+    createEvent: async (
       _,
       {
         addMe,
         event,
         notifySubscribers,
       }: { addMe: boolean; event: InputEvent; notifySubscribers: boolean },
-      { dynamoDB }: { dynamoDB: AWS.DynamoDB.DocumentClient }
-    ) => {
-      const dbParams = {
+      { dynamoDBAdapter }: { dynamoDBAdapter: DynamoDBAdapter }
+    ): Promise<Event> => {
+      const id: string = uuid();
+      console.log('INSERT', id);
+
+      const parameters = {
         TableName: 'events',
         Item: {
-          id: uuidv4(),
+          id,
           ...event,
         },
+        ConditionExpression: 'attribute_not_exists(id)',
       };
-
-      dynamoDB.put(dbParams);
+      try {
+        await dynamoDBAdapter.insert(parameters);
+      } catch (error) {
+        console.error(error);
+      }
+      return {
+        id,
+        title: 'uus',
+      };
     },
   },
   Query: {
     findEvent: async (
       _,
       { id }: { id: string },
-      { dynamoDB }: { dynamoDB: AWS.DynamoDB.DocumentClient }
+      { dynamoDBAdapter }: { dynamoDBAdapter: DynamoDBAdapter }
     ): Promise<Event | null> => {
       const dbParams = {
         TableName: 'events',
@@ -74,33 +83,12 @@ export const resolvers = {
         },
       };
 
-      const result = await dynamoDB.get(dbParams).promise();
-      if (!result) {
+      const result = await dynamoDBAdapter.find(dbParams);
+      if (result == null || isEmpty(result)) {
         return null;
       }
-      console.log(result);
-      return {
-        id: '123',
-        createdAt: new Date(),
-        creator: {
-          sub: '123',
-          nickname: '123',
-        },
-        date: new Date(),
-        description: 'string',
-        exactTime: true,
-        participants: [
-          {
-            sub: '123',
-            nickname: '123',
-          },
-        ],
-        race: false,
-        subtitle: 'string',
-        title: 'string',
-        type: 'string',
-        updatedAt: new Date(),
-      };
+      const event = result.Item as Event;
+      return event;
     },
   },
 };
