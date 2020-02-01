@@ -14,6 +14,6 @@ module.exports = {
   },
   rules: {
     'import/no-default-export': 'error',
-    'import/ignore': '/.mjml$',
+    'import/ignore': '.mjml$',
   },
 };
