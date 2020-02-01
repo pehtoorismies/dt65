@@ -4,6 +4,7 @@
   "scripts": {
     "start": "serverless offline",
     "deploy": "serverless deploy",
+    "schema": "ts-node src/generate-schema.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -18,9 +19,18 @@
     "serverless-http": "^2.3.1",
     "serverless-offline": "^6.0.0-alpha.64",
     "serverless-webpack": "^5.3.1",
-    "webpack": "^4.41.5"
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-graphql-loader": "^1.0.2"
   },
   "dependencies": {
-    "graphql-yoga": "^1.18.3"
+    "graphql": "^14.6.0",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-tools": "^4.0.6",
+    "graphql-yoga": "^1.18.3",
+    "nexus": "^0.12.0-rc.9",
+    "ramda": "^0.26.1",
+    "uuid": "^3.4.0"
   }
 }

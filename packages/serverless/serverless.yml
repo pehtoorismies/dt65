@@ -20,6 +20,7 @@ org: pehtoorismies
 
 plugins:
   - serverless-webpack
+  - serverless-dynamodb-local
   - serverless-offline
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -29,10 +30,12 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-
-  # you can overwrite defaults here
   stage: dev
   region: eu-central-1
+  # evn
+  environment:
+    CONFIG_EVENTS_TABLE: ${self:custom.dynamo.tableNames.events}
+    CONFIG_DYNAMODB_ENDPOINT: ${self:custom.dynamo.endpoints.url}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -126,8 +129,21 @@ functions:
 #       Description: "Description for the output"
 #       Value: "Some output value"
 custom:
+  dynamodb:
+    start:
+      migrate: true
+    stages:
+      - dev
+  dynamo:
+    endpoints:
+      url: 'http://localhost:8000'
+    tableNames:
+      events: 'events'
   webpack:
     webpackConfig: 'webpack.config.js'
     includeModules: false
     packager: 'yarn'
     excludeFiles: src/**/*.test.ts
+
+resources:
+  - ${file(resources/events-table.yml)}
