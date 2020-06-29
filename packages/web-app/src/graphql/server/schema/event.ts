@@ -4,7 +4,21 @@ import { enumType, objectType } from '@nexus/schema'
 
 export const EventType = enumType({
   name: 'EventType',
-  members: ['Karonkka', 'Meeting'],
+  members: [
+    'Cycling',
+    'Karonkka',
+    'Meeting',
+    'Orienteering',
+    'Other',
+    'Running',
+    'Skiing',
+    'Spinning',
+    'Swimming',
+    'TrackRunning',
+    'Triathlon',
+    'Ultras',
+  ],
+  description: 'Event Types',
 })
 
 export const Event = objectType({

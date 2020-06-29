@@ -1,4 +1,4 @@
-import path, { resolve } from 'path'
+import { resolve } from 'path'
 import { makeSchema } from '@nexus/schema'
 import { graphql } from 'graphql'
 import { NextApiRequest, NextApiResponse } from 'next'

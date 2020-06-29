@@ -25,10 +25,15 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
-  EventType: "Karonkka" | "Meeting"
+  EventType: "Cycling" | "Karonkka" | "Meeting" | "Orienteering" | "Other" | "Running" | "Skiing" | "Spinning" | "Swimming" | "TrackRunning" | "Triathlon" | "Ultras"
 }
 
 export interface NexusGenRootTypes {
+  AuthPayload: { // root type
+    accessToken: string; // String!
+    expiresIn: string; // String!
+    idToken: string; // String!
+  }
   BaseUser: { // root type
     email: string; // String!
     id: string; // String!
@@ -47,6 +52,9 @@ export interface NexusGenRootTypes {
     title: string; // String!
     type: NexusGenEnums['EventType']; // EventType!
     updatedAt: any; // Date!
+  }
+  IDPayload: { // root type
+    id: string; // String!
   }
   Preferences: { // root type
     subscribeEventCreationEmail: boolean; // Boolean!
@@ -81,6 +89,11 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 }
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    accessToken: string; // String!
+    expiresIn: string; // String!
+    idToken: string; // String!
+  }
   BaseUser: { // field return type
     email: string; // String!
     id: string; // String!
@@ -100,13 +113,12 @@ export interface NexusGenFieldTypes {
     type: NexusGenEnums['EventType']; // EventType!
     updatedAt: any; // Date!
   }
+  IDPayload: { // field return type
+    id: string; // String!
+  }
   Preferences: { // field return type
     subscribeEventCreationEmail: boolean; // Boolean!
     subscribeWeeklyEmail: boolean; // Boolean!
-  }
-  Query: { // field return type
-    hero: string; // String!
-    human: string; // String!
   }
   SimpleUser: { // field return type
     id: string; // String!
@@ -133,7 +145,7 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "BaseUser" | "Event" | "Preferences" | "Query" | "SimpleUser" | "User";
+export type NexusGenObjectNames = "AuthPayload" | "BaseUser" | "Event" | "IDPayload" | "Preferences" | "Query" | "SimpleUser" | "User";
 
 export type NexusGenInputNames = never;
 

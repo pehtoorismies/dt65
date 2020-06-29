@@ -2,6 +2,12 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  accessToken: String!
+  expiresIn: String!
+  idToken: String!
+}
+
 type BaseUser {
   email: String!
   id: String!
@@ -28,9 +34,24 @@ type Event {
   updatedAt: Date!
 }
 
+"""Event Types"""
 enum EventType {
+  Cycling
   Karonkka
   Meeting
+  Orienteering
+  Other
+  Running
+  Skiing
+  Spinning
+  Swimming
+  TrackRunning
+  Triathlon
+  Ultras
+}
+
+type IDPayload {
+  id: String!
 }
 
 type Preferences {
@@ -38,10 +59,7 @@ type Preferences {
   subscribeWeeklyEmail: Boolean!
 }
 
-type Query {
-  hero: String!
-  human: String!
-}
+type Query
 
 type SimpleUser {
   """Auth0 id (backwards comp)"""
