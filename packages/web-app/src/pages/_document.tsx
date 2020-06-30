@@ -31,9 +31,8 @@ class EnhancedDocument extends Document {
       <Html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css?family=Montserrat"
+            href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap"
             rel="stylesheet"
-            type="text/css"
           />
           {this.props.styles}
         </Head>
