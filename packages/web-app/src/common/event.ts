@@ -16,8 +16,8 @@ export enum EventType {
   SKIING = 'skiing',
   SPINNING = 'spinning',
   SWIMMING = 'swimming',
-  TRACK_RUNNING = 'trackRunning',
-  TRAIL_RUNNING = 'trailRunning',
+  TRACK_RUNNING = 'track-running',
+  TRAIL_RUNNING = 'trail-running',
   TRIATHLON = 'triathlon',
   ULTRAS = 'ultras',
 }

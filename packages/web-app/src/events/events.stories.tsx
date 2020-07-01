@@ -64,7 +64,7 @@ const getParticipants = (howMany = 10) => {
   }, howMany)
 }
 
-const participants = getParticipants(10)
+const participants = getParticipants()
 
 const getMe = (participants: Participant[]) => {
   const hasMe = boolean('me', true)
@@ -77,19 +77,20 @@ export const pills = () => {
   return <Pills participants={participants} me={getMe(participants)} />
 }
 
-const getEvent = (): Event => {
+const getEvent = (participants: Participant[]): Event => {
   return {
+    eventType: select('eventType', options, EventType.CYCLING),
     id: faker.random.uuid(),
     subtitle: text('subtitle', 'Subtitle'),
     title: text('title', 'Title'),
     creator: text('creator', 'Creator'),
     onClick: action('onClick'),
     race: boolean('race', false),
-    participants: getParticipants(),
-    eventType: select('eventType', options, EventType.CYCLING),
+    participants,
+    date: faker.date.future(),
   }
 }
 
 export const eventCard = () => {
-  return <EventCard event={getEvent()} />
+  return <EventCard event={getEvent(participants)} me={getMe(participants)} />
 }

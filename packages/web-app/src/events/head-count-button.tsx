@@ -1,7 +1,7 @@
 import { LoaderAlt } from '@styled-icons/boxicons-regular/LoaderAlt'
 import { User } from '@styled-icons/boxicons-regular/User'
 import React from 'react'
-import { Flex, Text } from 'rebass/styled-components'
+import { Button, Flex, Text } from 'rebass/styled-components'
 import styled, { keyframes } from 'styled-components'
 
 interface Props {
@@ -69,8 +69,9 @@ export const HeadCountButton = (props: Props) => {
 
   return (
     <Count
+      as="button"
       onClick={clicked}
-      bg={isParticipant ? 'pink' : 'blue'}
+      bg={isParticipant ? 'blue' : 'pink'}
       flexDirection="column"
       alignItems="center"
       justifyContent="center"

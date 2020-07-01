@@ -1,17 +1,46 @@
-import React from 'react'
+import { CaretDownCircle } from '@styled-icons/boxicons-regular/CaretDownCircle'
+import { Edit } from '@styled-icons/boxicons-regular/Edit'
+import React, { useState } from 'react'
+import AnimateHeight from 'react-animate-height'
 import { Box, Card, Flex, Text } from 'rebass/styled-components'
+import styled, { css } from 'styled-components'
 import { Event } from '../common/event'
-// import styled, { keyframes } from 'styled-components'
-import { HeaderImage } from './header-image'
+import { Participant } from '../common/participant'
+import { Description } from './description'
 import { HeadCountButton } from './head-count-button'
+import { HeaderImage } from './header-image'
+import { Pills } from './pills'
+import { toFinnishDate } from './util'
+import { IconButton } from './icon-button'
 
 interface Props {
   event: Event
+  me?: Participant
 }
+
+const iconCss = css`
+  color: white;
+  height: 3rem;
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const EditIcon = styled(Edit)`
+  ${iconCss}
+`
+const ToggleIcon = styled(CaretDownCircle)`
+  ${iconCss}
+`
 
 const borderStyle = '1px solid #e9e9e9'
 
-const Info = ({ title, text }: { title: string; text?: string }) => {
+interface InfoProps {
+  title: string
+  text?: string
+}
+
+const Info = ({ title, text }: InfoProps) => {
   return (
     <Flex>
       <Text fontWeight="bold" color="lightBlack" width={60}>
@@ -24,10 +53,13 @@ const Info = ({ title, text }: { title: string; text?: string }) => {
   )
 }
 
-export const EventCard = ({ event }: Props) => {
+const ANIM_TIME = 500
+
+export const EventCard = ({ event, me }: Props) => {
   const {
     participants,
     address,
+    description,
     date,
     eventType,
     race,
@@ -35,6 +67,13 @@ export const EventCard = ({ event }: Props) => {
     subtitle,
     creator,
   } = event
+
+  const [showDetails, setShowDetails] = useState(false)
+
+  const toggleDetails = (event: MouseEvent) => {
+    event.stopPropagation()
+    setShowDetails(!showDetails)
+  }
 
   return (
     <Flex
@@ -54,7 +93,14 @@ export const EventCard = ({ event }: Props) => {
           creator={creator}
           eventType={eventType}
           onClick={() => console.log('click')}
-        />
+        >
+          <IconButton onClick={toggleDetails} left="1rem">
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={toggleDetails} right="1rem">
+            <ToggleIcon />
+          </IconButton>
+        </HeaderImage>
         <Flex
           p={2}
           bg="darkWhite"
@@ -72,8 +118,8 @@ export const EventCard = ({ event }: Props) => {
             <Text fontSize="1.6rem" fontWeight="bold">
               {subtitle}
             </Text>
-            <Text mt={1} fontSize={16}>
-              1.2.2021 (la)
+            <Text mt="0.5rem" fontSize="1.6rem">
+              {toFinnishDate(date)}
             </Text>
           </Flex>
           <Flex alignItems="center" justifyContent="center">
@@ -81,22 +127,28 @@ export const EventCard = ({ event }: Props) => {
               loading={false}
               count={participants.length}
               onClick={() => console.log('Join')}
-              isParticipant={true}
+              isParticipant={
+                participants.findIndex(({ id }) => me?.id === id) >= 0
+              }
             />
           </Flex>
         </Flex>
-        <Box
-          px="1rem"
-          pt="1rem"
-          bg="darkWhite"
-          sx={{
-            borderLeft: borderStyle,
-            borderRight: borderStyle,
-          }}
-        >
-          <Info title="Päivämäärä" text={address} />
-          <Info title="Aika" text={address} />
-        </Box>
+        <AnimateHeight duration={ANIM_TIME} height={showDetails ? 'auto' : 0}>
+          <Box
+            px="1rem"
+            pt="1rem"
+            bg="darkWhite"
+            sx={{
+              borderLeft: borderStyle,
+              borderRight: borderStyle,
+            }}
+          >
+            <Info title="Sijainti" text={address} />
+            <Info title="Aika" text={address} />
+            <Pills participants={participants} me={me} />
+            <Description htmlText={description} />
+          </Box>
+        </AnimateHeight>
       </Card>
     </Flex>
   )

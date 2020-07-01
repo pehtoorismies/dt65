@@ -1,6 +1,5 @@
 import { Medal } from '@styled-icons/boxicons-regular/Medal'
-import { Edit } from '@styled-icons/boxicons-regular/Edit'
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Flex, Text } from 'rebass/styled-components'
 import styled from 'styled-components'
 import { EventType } from '../common/event'
@@ -36,14 +35,6 @@ const RaceLogo = styled(Medal)`
   padding: 0.4rem;
 `
 
-const EditButton = styled(Edit)`
-  color: white;
-  height: 3rem;
-  &:hover {
-    cursor: pointer;
-  }
-`
-
 interface Props {
   isRace: boolean
   title: string
@@ -58,18 +49,11 @@ export const HeaderImage = ({
   title,
   creator,
   onClick,
-}: Props) => {
+  children,
+}: PropsWithChildren<Props>) => {
   return (
     <ImageBox bgImage={mapEventTypeToImage(eventType)} onClick={onClick}>
-      <Flex
-        p="0.4rem"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ position: 'absolute', left: '1rem', top: '1rem' }}
-      >
-        <EditButton />
-      </Flex>
-
+      {children}
       <Flex
         width="100%"
         alignItems="center"

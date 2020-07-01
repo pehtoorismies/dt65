@@ -1,4 +1,4 @@
-import { Event } from '../common/event/event'
+import { Event } from '../common/event'
 
 export interface Store {
   createEvent: (event: Event) => Promise<Event>

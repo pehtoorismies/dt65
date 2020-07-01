@@ -27,7 +27,7 @@ export const Pills = ({ participants, me }: Props) => {
   })
 
   return (
-    <Flex flexWrap="wrap" py={1}>
+    <Flex flexWrap="wrap" py="1rem">
       {pills}
     </Flex>
   )
