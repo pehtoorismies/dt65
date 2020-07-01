@@ -17,6 +17,7 @@ import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
 import { EVENT_TYPE_MAP } from './map-event-type-to-image'
 import { Pills } from './pills'
+import { EventList } from './events-list'
 
 export default {
   title: 'Events',
@@ -93,4 +94,15 @@ const getEvent = (participants: Participant[]): Event => {
 
 export const eventCard = () => {
   return <EventCard event={getEvent(participants)} me={getMe(participants)} />
+}
+
+export const eventList = () => {
+  const participants = getParticipants()
+  const randomEvent = () => {
+    return getEvent(participants)
+  }
+
+  const events = times(randomEvent, 10)
+
+  return <EventList events={events} />
 }
