@@ -3,7 +3,7 @@ import { Edit } from '@styled-icons/boxicons-regular/Edit'
 import React from 'react'
 import { Flex, Text } from 'rebass/styled-components'
 import styled from 'styled-components'
-import { EventType } from '../common/event/event'
+import { EventType } from '../common/event'
 import { mapEventTypeToImage } from './map-event-type-to-image'
 
 interface BoxProps {
@@ -62,8 +62,7 @@ export const HeaderImage = ({
   return (
     <ImageBox bgImage={mapEventTypeToImage(eventType)} onClick={onClick}>
       <Flex
-        p="1rem"
-        bg="blue"
+        p="0.4rem"
         justifyContent="center"
         alignItems="center"
         sx={{ position: 'absolute', left: '1rem', top: '1rem' }}

@@ -2,7 +2,7 @@ import { DynamoDB } from 'aws-sdk'
 import faker from 'faker'
 import { times } from 'ramda'
 import { v4 as uuidv4 } from 'uuid'
-import { Event, EventType } from '../common/event/event'
+import { Event, EventType } from '../common/event'
 import { DynamoStore } from './dynamo-store'
 import { Table } from './table'
 

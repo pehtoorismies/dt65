@@ -3,16 +3,20 @@ import { action } from '@storybook/addon-actions'
 import {
   boolean,
   number,
+  select,
   text,
   withKnobs,
-  select,
 } from '@storybook/addon-knobs'
-import { fromPairs, map, pipe } from 'ramda'
+import faker from 'faker'
+import { fromPairs, map, pipe, times } from 'ramda'
 import React from 'react'
-import { EventType } from '../common/event/event'
+import { Event, EventType } from '../common/event'
+import { Participant } from '../common/participant'
+import { EventCard } from './event-card'
 import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
-import { EVENT_TYPE_MAP, EventTypeMap } from './map-event-type-to-image'
+import { EVENT_TYPE_MAP } from './map-event-type-to-image'
+import { Pills } from './pills'
 
 export default {
   title: 'Events',
@@ -49,4 +53,40 @@ export const imageBox = () => {
       eventType={select('eventType', options, EventType.CYCLING)}
     />
   )
+}
+
+const getParticipants = (howMany = 10) => {
+  return times(() => {
+    return {
+      nickname: faker.internet.userName(),
+      id: faker.random.uuid(),
+    }
+  }, howMany)
+}
+
+const participants = getParticipants(10)
+
+const getMe = (participants: Participant[]) => {
+  const hasMe = boolean('me', true)
+  if (hasMe) {
+    return participants[faker.random.number(participants.length)]
+  }
+}
+
+export const pills = () => {
+  return <Pills participants={participants} me={getMe(participants)} />
+}
+
+const getEvent = (): Event => {
+  return {
+    title: text('title', 'Title'),
+    creator: text('creator', 'Creator'),
+    onClick: action('onClick'),
+    race: boolean('race', false),
+    eventType: select('eventType', options, EventType.CYCLING),
+  }
+}
+
+export const eventCard = () => {
+  return <EventCard event={getEvent()} />
 }

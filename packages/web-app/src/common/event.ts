@@ -29,4 +29,5 @@ export interface Event extends Timestamps {
   eventType: EventType
   date: Date
   exactTime?: boolean
+  creator: string
 }

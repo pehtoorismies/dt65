@@ -1,15 +1,18 @@
 import React from 'react'
-import { Card, Flex, Text } from 'rebass/styled-components'
+import { Card, Flex } from 'rebass/styled-components'
+import { Event } from '../common/event'
 // import styled, { keyframes } from 'styled-components'
-// import { ImageBox } from './styles'
+import { HeaderImage } from './header-image'
 
 interface Props {
-  title?: string
+  event: Event
 }
 
 const borderStyle = '1px solid #e9e9e9'
 
-export const EventCard = ({}: Props) => {
+export const EventCard = ({ event }: Props) => {
+  const { eventType, race, title, creator } = event
+
   return (
     <Flex
       m={1}
@@ -21,7 +24,15 @@ export const EventCard = ({}: Props) => {
         position: 'relative',
       }}
     >
-      <Card width="100%" mx="auto" variant="shadow"></Card>
+      <Card width="100%" mx="auto" variant="shadow">
+        <HeaderImage
+          isRace={race}
+          title={title}
+          creator={creator}
+          eventType={eventType}
+          onClick={() => console.log('click')}
+        />
+      </Card>
     </Flex>
   )
 }

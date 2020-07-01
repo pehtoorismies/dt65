@@ -1,4 +1,4 @@
-import { EventType } from '../common/event/event'
+import { EventType } from '../common/event'
 
 export interface EventTypeMap {
   title: string

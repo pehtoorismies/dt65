@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk'
 import { v4 as uuidv4 } from 'uuid'
 import { DynamoStore } from '../../services/dynamo-store'
 import { initDB } from '../../services/dynamo-util'
-import { EventType } from '../../common/event/event'
+import { EventType } from '../../common/event'
 
 const init = async () => {
   if (process.env.NODE_ENV === 'development') {
