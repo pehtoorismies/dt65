@@ -1,6 +1,6 @@
 import * as AWS from 'aws-sdk'
 
-import { Event } from './event'
+import { Event } from '../common/event/event'
 import { Store } from './store'
 import { Table } from './table'
 

@@ -1,10 +1,10 @@
 import { DynamoDB } from 'aws-sdk'
-import { times } from 'ramda'
 import faker from 'faker'
+import { times } from 'ramda'
 import { v4 as uuidv4 } from 'uuid'
-import { Table } from './table'
+import { Event, EventType } from '../common/event/event'
 import { DynamoStore } from './dynamo-store'
-import { Event, EventType } from './event'
+import { Table } from './table'
 
 const createEventsTable = async (dynamodb: AWS.DynamoDB) => {
   const input: DynamoDB.Types.CreateTableInput = {
