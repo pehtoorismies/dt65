@@ -79,10 +79,13 @@ export const pills = () => {
 
 const getEvent = (): Event => {
   return {
+    id: faker.random.uuid(),
+    subtitle: text('subtitle', 'Subtitle'),
     title: text('title', 'Title'),
     creator: text('creator', 'Creator'),
     onClick: action('onClick'),
     race: boolean('race', false),
+    participants: getParticipants(),
     eventType: select('eventType', options, EventType.CYCLING),
   }
 }

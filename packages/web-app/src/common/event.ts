@@ -1,3 +1,5 @@
+import { Participant } from './participant'
+
 export interface Timestamps {
   createdAt: Date
   updatedAt?: Date
@@ -23,6 +25,7 @@ export enum EventType {
 export interface Event extends Timestamps {
   id: string
   title: string
+  address?: string
   subtitle?: string
   race: boolean
   description?: string
@@ -30,4 +33,5 @@ export interface Event extends Timestamps {
   date: Date
   exactTime?: boolean
   creator: string
+  participants: Participant[]
 }
