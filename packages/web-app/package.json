@@ -14,6 +14,7 @@
     "@styled-icons/boxicons-regular": "^10.5.0",
     "@styled-icons/boxicons-solid": "^10.5.0",
     "@styled-icons/fa-solid": "^10.5.0",
+    "@styled-icons/icomoon": "^10.6.0",
     "aws-sdk": "^2.707.0",
     "color": "^3.1.2",
     "date-fns": "^2.14.0",

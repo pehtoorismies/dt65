@@ -92,7 +92,7 @@ export class DynamoStore implements Store {
     }
 
     const event = await this.documentClient.get(parameters).promise()
-    return parseEvent(event)
+    return parseEvent(event.Item)
   }
 
   // deleteEvent: (id: ID) => Promise<Event>

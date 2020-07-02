@@ -1,4 +1,5 @@
 import { parseISO } from 'date-fns'
+import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 import { SerializedEvent } from '../common/event'
 import { EventList } from '../events/events-list'
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Home = ({ serializedEvents }: Props) => {
+  const router = useRouter()
   const events = serializedEvents.map(event => {
     return {
       ...event,
@@ -17,7 +19,11 @@ const Home = ({ serializedEvents }: Props) => {
     }
   })
 
-  return <EventList events={events} />
+  const onCardClick = (year: number, monthDayId: string) => {
+    router.push(`/[year]/[id]`, `/${year}/${monthDayId}`)
+  }
+
+  return <EventList events={events} onCardClick={onCardClick} />
 }
 
 export async function getServerSideProps() {

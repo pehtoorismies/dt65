@@ -1,6 +1,7 @@
 import { parseISO } from 'date-fns'
 import { GetServerSidePropsContext } from 'next'
 import React from 'react'
+import { Flex } from 'rebass/styled-components'
 import { SerializedEvent } from '../../common/event'
 import { EventCard } from '../../events/event-card'
 import { getStore } from '../../services/dynamo-util'
@@ -16,7 +17,11 @@ const EventPage = ({ serializedEvent }: Props) => {
     createdAt: parseISO(serializedEvent.createdAt),
   }
 
-  return <EventCard event={event} />
+  return (
+    <Flex justifyContent="center">
+      <EventCard event={event} isExpanded />
+    </Flex>
+  )
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

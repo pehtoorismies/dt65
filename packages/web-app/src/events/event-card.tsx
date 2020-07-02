@@ -1,7 +1,6 @@
 import { CaretDownCircle } from '@styled-icons/boxicons-regular/CaretDownCircle'
 import { Edit } from '@styled-icons/boxicons-regular/Edit'
-import React, { useState } from 'react'
-import AnimateHeight from 'react-animate-height'
+import React from 'react'
 import { Box, Card, Flex, Text } from 'rebass/styled-components'
 import styled, { css } from 'styled-components'
 import { Event } from '../common/event'
@@ -9,13 +8,15 @@ import { Participant } from '../common/participant'
 import { Description } from './description'
 import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
+import { IconButton } from './icon-button'
 import { Pills } from './pills'
 import { toFinnishDate } from './util'
-import { IconButton } from './icon-button'
 
 interface Props {
   event: Event
   me?: Participant
+  onCardClick?: () => void
+  isExpanded?: boolean
 }
 
 const iconCss = css`
@@ -53,9 +54,7 @@ const Info = ({ title, text }: InfoProps) => {
   )
 }
 
-const ANIM_TIME = 500
-
-export const EventCard = ({ event, me }: Props) => {
+export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
   const {
     participants,
     address,
@@ -67,13 +66,6 @@ export const EventCard = ({ event, me }: Props) => {
     subtitle,
     creator,
   } = event
-
-  const [showDetails, setShowDetails] = useState(false)
-
-  const toggleDetails = (event: MouseEvent) => {
-    event.stopPropagation()
-    setShowDetails(!showDetails)
-  }
 
   return (
     <Flex
@@ -92,13 +84,15 @@ export const EventCard = ({ event, me }: Props) => {
           title={title}
           creator={creator}
           eventType={eventType}
-          onClick={() => console.log('click')}
+          onClick={onCardClick}
         >
-          <IconButton onClick={toggleDetails} left="1rem">
+          <IconButton
+            onClick={() => {
+              console.log('Edit')
+            }}
+            left="1rem"
+          >
             <EditIcon />
-          </IconButton>
-          <IconButton onClick={toggleDetails} right="1rem">
-            <ToggleIcon />
           </IconButton>
         </HeaderImage>
         <Flex
@@ -133,22 +127,22 @@ export const EventCard = ({ event, me }: Props) => {
             />
           </Flex>
         </Flex>
-        <AnimateHeight duration={ANIM_TIME} height={showDetails ? 'auto' : 0}>
-          <Box
-            px="1rem"
-            pt="1rem"
-            bg="darkWhite"
-            sx={{
-              borderLeft: borderStyle,
-              borderRight: borderStyle,
-            }}
-          >
-            <Info title="Sijainti" text={address} />
-            <Info title="Aika" text={address} />
-            <Pills participants={participants} me={me} />
-            <Description htmlText={description} />
-          </Box>
-        </AnimateHeight>
+        <Box></Box>
+        <Box
+          display={isExpanded ? 'display' : 'none'}
+          px="1rem"
+          pt="1rem"
+          bg="darkWhite"
+          sx={{
+            borderLeft: borderStyle,
+            borderRight: borderStyle,
+          }}
+        >
+          <Info title="Sijainti" text={address} />
+          <Info title="Aika" text={address} />
+          <Pills participants={participants} me={me} />
+          <Description htmlText={description} />
+        </Box>
       </Card>
     </Flex>
   )

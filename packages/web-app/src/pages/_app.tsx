@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app'
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
+import { PageContainer } from '../page-container/page-container'
 import { GlobalStyles, theme } from '../styles/styles'
 
 const MySharity = ({ Component, pageProps }: AppProps) => {
@@ -8,7 +9,9 @@ const MySharity = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyles />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <PageContainer>
+          <Component {...pageProps} />
+        </PageContainer>
       </ThemeProvider>
     </>
   )
