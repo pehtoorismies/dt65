@@ -8,14 +8,14 @@ export const PageContainer = ({ children }: PropsWithChildren<{}>) => {
   const router = useRouter()
   const footerProps = {
     onHomeClick: () => router.push('/'),
-    onProfileClick: () => console.log('hjel'),
+    onProfileClick: () => router.push('/profile'),
     onAddEventClick: () => console.log('hjel'),
     onUserListClick: () => console.log('hjel'),
   }
 
   return (
-    <Flex width="100%" justifyContent="center">
-      <Box mt="4rem" mb="4rem" width="100%" maxWidth="68rem">
+    <Flex width="100%" justifyContent="center" px="1rem">
+      <Box mt="4rem" mb="4rem" width="100%" maxWidth={['100%', '70rem']}>
         <Toolbar pageTitle="Koria" />
         {children}
         <Footer {...footerProps} />

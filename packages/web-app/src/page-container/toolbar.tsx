@@ -1,19 +1,12 @@
 import React from 'react'
 import { Flex, Text } from 'rebass'
-import styled from '@emotion/styled'
-import { ArrowBack } from '@styled-icons/boxicons-regular/ArrowBack'
-import { colors } from '../styles/styles'
+import { HomeIcon } from './icons'
 
 interface Props {
   pageTitle?: string
   onBack?: () => void
   backDisabled?: boolean
 }
-
-const BackIcon = styled(ArrowBack)`
-  color: ${colors.pink};
-  height: 25px;
-`
 
 export const Toolbar = (props: Props) => {
   const { pageTitle, onBack, backDisabled } = props
@@ -22,12 +15,13 @@ export const Toolbar = (props: Props) => {
     undefined
   ) : (
     <Flex sx={{ borderRadius: '50%' }} bg="darkWhite" p={1}>
-      <BackIcon onClick={onBack} />
+      <HomeIcon onClick={onBack} />
     </Flex>
   )
 
   return (
     <Flex
+      bg="white"
       width="100%"
       justifyContent="center"
       sx={{
@@ -40,7 +34,7 @@ export const Toolbar = (props: Props) => {
     >
       <Flex
         width="100%"
-        maxWidth="68rem"
+        maxWidth={['40rem', '70rem']}
         justifyContent="space-between"
         alignItems="center"
       >

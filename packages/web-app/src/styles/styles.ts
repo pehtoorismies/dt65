@@ -228,10 +228,11 @@ export const GlobalStyles = createGlobalStyle`
   
   html {
     font-size: 10px;
+    height: 100%;
   }
   body {
     font-family: 'Titillium Web', sans-serif;
-    
+    height: 100%;
   }
 `
 

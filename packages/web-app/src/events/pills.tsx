@@ -12,13 +12,13 @@ export const Pills = ({ participants, me }: Props) => {
     return (
       <Text
         sx={{
-          borderRadius: '4px',
+          borderRadius: '0.4rem',
         }}
         bg={me?.id === id ? 'blue' : 'pink'}
         key={id}
         p="0.5rem"
         m="0.3rem"
-        fontSize={10}
+        fontSize="1.4rem"
         color="white"
       >
         {nickname}

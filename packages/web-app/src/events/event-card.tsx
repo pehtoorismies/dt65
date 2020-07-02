@@ -1,4 +1,3 @@
-import { CaretDownCircle } from '@styled-icons/boxicons-regular/CaretDownCircle'
 import { Edit } from '@styled-icons/boxicons-regular/Edit'
 import React from 'react'
 import { Box, Card, Flex, Text } from 'rebass/styled-components'
@@ -28,9 +27,6 @@ const iconCss = css`
 `
 
 const EditIcon = styled(Edit)`
-  ${iconCss}
-`
-const ToggleIcon = styled(CaretDownCircle)`
   ${iconCss}
 `
 
@@ -73,7 +69,7 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
       bg="white"
       width="100%"
       sx={{
-        maxWidth: 400,
+        maxWidth: '40rem',
         borderBottom: borderStyle,
         position: 'relative',
       }}
