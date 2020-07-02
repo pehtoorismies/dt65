@@ -34,6 +34,7 @@ export const Footer = ({
         maxWidth={['40rem', '70rem']}
         justifyContent="space-between"
         alignItems="center"
+        px="1rem"
       >
         <HomeIcon onClick={onHomeClick} />
         <AddIcon onClick={onAddEventClick} />

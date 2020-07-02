@@ -1,4 +1,5 @@
 import { Event, SerializedEvent } from '../common/event'
+import { UserInfo } from '../users/user-info'
 
 export interface Store {
   createEvent: (event: Event) => Promise<Event>
@@ -6,4 +7,6 @@ export interface Store {
   getEvent: (yearID: number, monthDateId: string) => Promise<SerializedEvent>
   // deleteEvent: (id: ID) => Promise<Event>
   // updateEvent: (event: Event) => Promise<Event>
+  createUser: (user: UserInfo) => Promise<UserInfo>
+  getUsers: () => Promise<UserInfo[]>
 }

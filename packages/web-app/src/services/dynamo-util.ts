@@ -1,81 +1,33 @@
 import AWS, { DynamoDB } from 'aws-sdk'
-import faker from 'faker'
-import { times } from 'ramda'
-import { v4 as uuidv4 } from 'uuid'
-import { Event, EventType } from '../common/event'
+import { createRandomEvents, createRandomUsers } from '../util/random'
 import { DynamoStore } from './dynamo-store'
-import { Table } from './table'
+import { createEventsTable, createUsersTable } from './dynamo-tables'
 import { Store } from './store'
 
-const createEventsTable = async (dynamodb: AWS.DynamoDB) => {
-  const input: DynamoDB.Types.CreateTableInput = {
-    TableName: Table.EVENTS,
-    AttributeDefinitions: [
-      {
-        AttributeName: 'yearId',
-        AttributeType: 'N',
-      },
-      {
-        AttributeName: 'monthDateId',
-        AttributeType: 'S',
-      },
-    ],
-    KeySchema: [
-      {
-        AttributeName: 'yearId',
-        KeyType: 'HASH',
-      },
-      {
-        AttributeName: 'monthDateId',
-        KeyType: 'RANGE',
-      },
-    ],
-    ProvisionedThroughput: {
-      ReadCapacityUnits: 1,
-      WriteCapacityUnits: 1,
-    },
-  }
-  try {
-    const result = await dynamodb.createTable(input).promise()
-    return result
-  } catch (error) {
-    if (error.code === 'ResourceInUseException') {
-      console.log('INFO: Table already exists')
-    } else {
-      console.error(error)
-    }
-  }
-}
-
-const createRandomEvent = (): Event => {
-  const rand = Math.floor(Math.random() * Object.keys(EventType).length)
-
-  return {
-    id: uuidv4().toString(),
-    description: faker.lorem.sentences(),
-    title: faker.commerce.product(),
-    subtitle: faker.commerce.product(),
-    date: faker.date.future(),
-    createdAt: faker.date.past(),
-    race: faker.random.boolean(),
-    eventType: EventType[Object.keys(EventType)[rand]],
-    participants: [{ id: '123', nickname: 'koira' }],
-    creator: faker.internet.userName(),
-  }
-}
-
-const initData = async (store: DynamoStore, count = 10) => {
-  const events = times(createRandomEvent, count)
-  // TODO: make async
-  for (const event of events) {
+const initEvents = async (store: DynamoStore) => {
+  const events = createRandomEvents(15)
+  events.forEach(async event => {
     await store.createEvent(event)
-  }
+  })
+}
+
+const initUsers = async (store: DynamoStore) => {
+  const users = createRandomUsers(60)
+
+  users.forEach(async user => {
+    await store.createUser(user)
+  })
 }
 
 export const initDB = async (dynamoDB: AWS.DynamoDB, store: DynamoStore) => {
-  const result = await createEventsTable(dynamoDB)
-  if (result != undefined) {
-    initData(store)
+  const events = await createEventsTable(dynamoDB)
+
+  if (events != undefined) {
+    await initEvents(store)
+  }
+  const users = await createUsersTable(dynamoDB)
+  if (users != undefined) {
+    await initUsers(store)
   }
 }
 

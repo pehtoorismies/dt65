@@ -9,8 +9,8 @@ export const PageContainer = ({ children }: PropsWithChildren<{}>) => {
   const footerProps = {
     onHomeClick: () => router.push('/'),
     onProfileClick: () => router.push('/profile'),
-    onAddEventClick: () => console.log('hjel'),
-    onUserListClick: () => console.log('hjel'),
+    onAddEventClick: () => console.log('/users'),
+    onUserListClick: () => router.push('/users'),
   }
 
   return (

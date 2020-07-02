@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk'
 import { format, getYear } from 'date-fns'
 import { Event, EventType, SerializedEvent } from '../common/event'
+import { UserInfo } from '../users/user-info'
 import { Store } from './store'
 import { Table } from './table'
 
@@ -38,13 +39,22 @@ const toEvents = ({
   return Items.map(a => parseEvent(a))
 }
 
+const parseUser = (user: any) => {
+  return user
+}
+
+const toUsers = ({
+  Items,
+}: AWS.DynamoDB.DocumentClient.ScanOutput): UserInfo[] => {
+  return Items.map(u => parseUser(u))
+}
+
 export class DynamoStore implements Store {
   constructor(private documentClient: AWS.DynamoDB.DocumentClient) {}
 
   async createEvent(event: Event): Promise<Event> {
     const { id, date, createdAt, ...rest } = event
     const { partitionKey, sortKey } = createPrimaryKey(date, id)
-    console.log('sortKey', sortKey)
 
     const parameters: AWS.DynamoDB.DocumentClient.PutItemInput = {
       Item: {
@@ -97,4 +107,30 @@ export class DynamoStore implements Store {
 
   // deleteEvent: (id: ID) => Promise<Event>
   // updateEvent: (event: Event) => Promise<Event>
+
+  async getUsers(): Promise<UserInfo[]> {
+    const parameters: AWS.DynamoDB.DocumentClient.ScanInput = {
+      TableName: Table.USERS,
+    }
+
+    const users = await this.documentClient.scan(parameters).promise()
+    return toUsers(users)
+  }
+
+  async createUser(user: UserInfo): Promise<UserInfo> {
+    const parameters: AWS.DynamoDB.DocumentClient.PutItemInput = {
+      TableName: Table.USERS,
+      Item: {
+        ...user,
+      },
+      ReturnValues: 'NONE',
+    }
+
+    try {
+      await this.documentClient.put(parameters).promise()
+      return user
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }

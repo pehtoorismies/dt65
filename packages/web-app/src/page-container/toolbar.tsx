@@ -40,18 +40,17 @@ export const Toolbar = (props: Props) => {
       >
         <Flex alignItems="center">
           {backButton}
-          <Text ml={3} fontWeight="bold">
-            Downtown65.events
-          </Text>
+          <Text fontWeight="bold">Downtown65.events</Text>
         </Flex>
 
         <Text
           textAlign="right"
           color="grey"
           fontFamily="monospace"
-          fontSize={1}
+          fontSize="1.6rem"
+          mr="0.5rem"
         >
-          /{pageTitle}
+          {pageTitle}
         </Text>
       </Flex>
     </Flex>
