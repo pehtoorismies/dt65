@@ -1,16 +1,34 @@
+import { parseISO } from 'date-fns'
 import React from 'react'
-import { GetServerSidePropsContext } from 'next'
+import { SerializedEvent } from '../common/event'
+import { EventList } from '../events/events-list'
+import { getStore } from '../services/dynamo-util'
 
-const HomePage = () => {
-  return <div>Welcome to Next.js!</div>
+interface Props {
+  serializedEvents: SerializedEvent[]
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // const store = Dynamo.getStore()
+const Home = ({ serializedEvents }: Props) => {
+  const events = serializedEvents.map(event => {
+    return {
+      ...event,
+      date: parseISO(event.date),
+      createdAt: parseISO(event.createdAt),
+    }
+  })
+
+  return <EventList events={events} />
+}
+
+export async function getServerSideProps() {
+  const store = await getStore()
+  const events = await store.getEvents(new Date())
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: {
+      serializedEvents: events,
+    },
   }
 }
 
-export default HomePage
+export default Home

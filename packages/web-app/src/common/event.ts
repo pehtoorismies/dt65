@@ -1,6 +1,6 @@
 import { Participant } from './participant'
 
-export interface Timestamps {
+type Timestamps = {
   createdAt: Date
   updatedAt?: Date
 }
@@ -22,7 +22,7 @@ export enum EventType {
   ULTRAS = 'ultras',
 }
 
-export interface Event extends Timestamps {
+export type Event = Timestamps & {
   id: string
   title: string
   address?: string
@@ -34,4 +34,10 @@ export interface Event extends Timestamps {
   exactTime?: boolean
   creator: string
   participants: Participant[]
+}
+
+export type SerializedEvent = Event & {
+  createdAt: string
+  updatedAt?: string
+  date: string
 }
