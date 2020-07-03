@@ -32,7 +32,7 @@ const EditIcon = styled(Edit)`
   ${iconCss}
 `
 
-const borderStyle = '1px solid #e9e9e9'
+const borderStyle = '0.1rem solid #e9e9e9'
 
 export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
   const {
@@ -68,6 +68,7 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
           creator={creator}
           eventType={eventType}
           onClick={onCardClick}
+          isClickable={!isExpanded}
         >
           <IconButton
             onClick={() => {

@@ -20,7 +20,7 @@ export const footer = () => (
   />
 )
 export const toolbar = () => {
-  return <Toolbar />
+  return <Toolbar pageTitle="Page title" />
 }
 
 export const pageContainer = () => {

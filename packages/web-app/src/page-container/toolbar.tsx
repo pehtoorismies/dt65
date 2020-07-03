@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Text } from 'rebass'
+import { Flex, Text } from 'rebass/styled-components'
 import { HomeIcon } from './icons'
 
 interface Props {
@@ -40,16 +40,9 @@ export const Toolbar = (props: Props) => {
       >
         <Flex alignItems="center">
           {backButton}
-          <Text fontWeight="bold">Downtown65.events</Text>
+          <Text variant="toolbarTitle">Downtown65.events</Text>
         </Flex>
-
-        <Text
-          textAlign="right"
-          color="grey"
-          fontFamily="monospace"
-          fontSize="1.6rem"
-          mr="0.5rem"
-        >
+        <Text variant="toolbarAddress" textAlign="right" mr="0.5rem">
           {pageTitle}
         </Text>
       </Flex>

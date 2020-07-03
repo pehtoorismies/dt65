@@ -65,6 +65,17 @@ export const text = {
     fontWeight: 400,
     fontSize: 2,
   },
+  toolbarTitle: {
+    color: 'heading',
+    fontWeight: 'bold',
+    fontFamily: 'main',
+    fontSize: 2,
+  },
+  toolbarAddress: {
+    color: 'heading',
+    fontFamily: 'main',
+    fontSize: 1,
+  },
 }
 
 export const fontFamily = {

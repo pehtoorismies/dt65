@@ -9,7 +9,7 @@ const MySharity = ({ Component, pageProps }: AppProps) => {
     <>
       <GlobalStyles />
       <ThemeProvider theme={theme}>
-        <PageContainer>
+        <PageContainer title={pageProps.title}>
           <Component {...pageProps} />
         </PageContainer>
       </ThemeProvider>

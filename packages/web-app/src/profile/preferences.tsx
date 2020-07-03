@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import map from 'ramda/es/map'
 import React, { Fragment, useState } from 'react'
 import Switch from 'react-switch'
-import { Button, Flex, Heading, Text } from 'rebass'
+import { Button, Flex, Heading, Text } from 'rebass/styled-components'
 import { colors } from '../styles/styles'
 
 interface Props {

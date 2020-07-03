@@ -4,7 +4,14 @@ import { Box, Flex } from 'rebass/styled-components'
 import { Footer } from './footer'
 import { Toolbar } from './toolbar'
 
-export const PageContainer = ({ children }: PropsWithChildren<{}>) => {
+interface Props {
+  title?: string
+}
+
+export const PageContainer = ({
+  children,
+  title,
+}: PropsWithChildren<Props>) => {
   const router = useRouter()
   const footerProps = {
     onHomeClick: () => router.push('/'),
@@ -16,7 +23,7 @@ export const PageContainer = ({ children }: PropsWithChildren<{}>) => {
   return (
     <Flex width="100%" justifyContent="center" px="1rem">
       <Box mt="4rem" mb="4rem" width="100%" maxWidth={['100%', '70rem']}>
-        <Toolbar pageTitle="Koria" />
+        <Toolbar pageTitle={title} />
         {children}
         <Footer {...footerProps} />
       </Box>

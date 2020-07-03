@@ -7,6 +7,7 @@ import { mapEventTypeToImage } from './map-event-type-to-image'
 
 interface BoxProps {
   bgImage: string
+  isClickable?: boolean
 }
 
 const getImage = (bgImage: string) => `/images/${bgImage}`
@@ -27,7 +28,7 @@ const ImageBox = styled.div<BoxProps>`
     'header'
     'title'
     'creator';
-  cursor: pointer;
+  cursor: ${props => (props.isClickable ? 'pointer' : 'default')};
 `
 
 const RaceLogo = styled(Medal)`
@@ -42,6 +43,7 @@ interface Props {
   creator: string
   eventType: EventType
   onClick: () => void
+  isClickable?: boolean
 }
 
 export const HeaderImage = ({
@@ -51,9 +53,18 @@ export const HeaderImage = ({
   creator,
   onClick,
   children,
+  isClickable,
 }: PropsWithChildren<Props>) => {
   return (
-    <ImageBox bgImage={mapEventTypeToImage(eventType)} onClick={onClick}>
+    <ImageBox
+      bgImage={mapEventTypeToImage(eventType)}
+      isClickable={isClickable}
+      onClick={() => {
+        if (isClickable) {
+          onClick()
+        }
+      }}
+    >
       {children}
       <Flex
         width="100%"

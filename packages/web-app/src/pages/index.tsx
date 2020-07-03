@@ -32,6 +32,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
+      title: 'Home',
       serializedEvents: events,
     },
   }
