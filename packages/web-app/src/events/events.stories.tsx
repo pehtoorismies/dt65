@@ -89,11 +89,21 @@ const getEvent = (participants: Participant[]): Event => {
     race: boolean('race', false),
     participants,
     date: faker.date.future(),
+    address: faker.address.city(),
+    exactTime: boolean('exactTime', false),
+    description:
+      '<h1>moi</h1><p>asasda</p><p>asasda</p><p>asasda</p><p>asasda</p>',
   }
 }
 
 export const eventCard = () => {
-  return <EventCard event={getEvent(participants)} me={getMe(participants)} />
+  return (
+    <EventCard
+      event={getEvent(participants)}
+      me={getMe(participants)}
+      isExpanded={boolean('isExpanded', true)}
+    />
+  )
 }
 
 export const eventList = () => {

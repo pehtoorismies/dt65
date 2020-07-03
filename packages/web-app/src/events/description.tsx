@@ -9,7 +9,7 @@ interface Props {
 export const Description = ({ htmlText }: Props) => {
   return (
     <>
-      <Text fontWeight="bold" color="lightBlack" width={60}>
+      <Text my={2} variant="infoTextTitle">
         Kuvaus:
       </Text>
       <Text py={2} ml={1} color={htmlText ? 'black' : 'lightgrey'}>

@@ -12,16 +12,16 @@ interface Props {
 
 const Arrow = styled(RightArrow)`
   color: white;
-  height: 15px;
-  width: 15px;
+  height: 1.5rem;
+  width: 1.5rem;
 `
 
 export const ArrowButton = ({ title, onClick, icon }: Props) => {
   const Icn = styled(icon)`
     color: white;
-    height: 18px;
-    width: 18px;
-    margin-right: 6px;
+    height: 1.8rem;
+    width: 1.8rem;
+    margin-right: 0.6rem;
   `
 
   return (

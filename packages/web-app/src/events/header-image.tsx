@@ -73,24 +73,13 @@ export const HeaderImage = ({
         alignItems="center"
         sx={{ gridArea: 'title' }}
       >
-        <Text
-          letterSpacing={4}
-          color="white"
-          fontSize={30}
-          fontWeight={900}
-          sx={{
-            textShadow: '2px 2px 5px black',
-          }}
-        >
+        <Text as="h1" variant="eventCardHeader">
           {title}
         </Text>
         {isRace && <RaceLogo />}
       </Flex>
       <Text
-        fontSize={11}
-        fontFamily="monospace"
-        p={1}
-        color="white"
+        variant="creator"
         width="100%"
         textAlign="right"
         sx={{

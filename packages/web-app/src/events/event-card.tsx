@@ -1,4 +1,5 @@
 import { Edit } from '@styled-icons/boxicons-regular/Edit'
+import { format } from 'date-fns'
 import React from 'react'
 import { Box, Card, Flex, Text } from 'rebass/styled-components'
 import styled, { css } from 'styled-components'
@@ -8,6 +9,7 @@ import { Description } from './description'
 import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
 import { IconButton } from './icon-button'
+import { InfoText } from './info-text'
 import { Pills } from './pills'
 import { toFinnishDate } from './util'
 
@@ -32,24 +34,6 @@ const EditIcon = styled(Edit)`
 
 const borderStyle = '1px solid #e9e9e9'
 
-interface InfoProps {
-  title: string
-  text?: string
-}
-
-const Info = ({ title, text }: InfoProps) => {
-  return (
-    <Flex>
-      <Text fontWeight="bold" color="lightBlack" width={60}>
-        {title}
-      </Text>
-      <Text ml={1} color={text ? 'black' : 'lightgrey'}>
-        {text || 'ei määritelty'}
-      </Text>
-    </Flex>
-  )
-}
-
 export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
   const {
     participants,
@@ -61,7 +45,10 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
     title,
     subtitle,
     creator,
+    exactTime,
   } = event
+
+  const time = exactTime ? format(date, 'hh:mm') : undefined
 
   return (
     <Flex
@@ -102,13 +89,13 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
           }}
         >
           <Flex justifyContent="space-around" flexDirection="column">
-            <Text fontSize="2rem" fontWeight="bold">
+            <Text as="h2" variant="h2">
               {title}
             </Text>
-            <Text fontSize="1.6rem" fontWeight="bold">
+            <Text as="h3" variant="h3">
               {subtitle}
             </Text>
-            <Text mt="0.5rem" fontSize="1.6rem">
+            <Text variant="eventDate" mt="0.5rem">
               {toFinnishDate(date)}
             </Text>
           </Flex>
@@ -123,9 +110,9 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
             />
           </Flex>
         </Flex>
-        <Box></Box>
+
         <Box
-          display={isExpanded ? 'display' : 'none'}
+          display={isExpanded ? 'block' : 'none'}
           px="1rem"
           pt="1rem"
           bg="darkWhite"
@@ -134,8 +121,11 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
             borderRight: borderStyle,
           }}
         >
-          <Info title="Sijainti" text={address} />
-          <Info title="Aika" text={address} />
+          <InfoText title="Sijainti" text={address} />
+          <InfoText title="Aika" text={time} />
+          <Text variant="infoTextTitle" pt={1} my={2}>
+            Osallistujat:
+          </Text>
           <Pills participants={participants} me={me} />
           <Description htmlText={description} />
         </Box>

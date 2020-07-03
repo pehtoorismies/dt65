@@ -47,7 +47,7 @@ export const Profile = (props: Props) => {
           fontWeight="bold"
           color="black"
           textAlign="center"
-          lineHeight={1.5}
+          lineHeight="0.15rem"
           p={1}
         >
           {nickname}
