@@ -8,6 +8,7 @@ const common = css`
   color: black;
   width: 2.6rem;
   height: 2.6rem;
+  cursor: pointer;
 `
 
 export const HomeIcon = styled(Home)`

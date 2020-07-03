@@ -32,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       serializedEvent: event,
-      title: `events // ${event.title}`,
+      title: event.title,
     },
   }
 }

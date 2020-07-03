@@ -13,8 +13,10 @@ export const PageContainer = ({
   title,
 }: PropsWithChildren<Props>) => {
   const router = useRouter()
+  const gotoHome = () => router.push('/')
+
   const footerProps = {
-    onHomeClick: () => router.push('/'),
+    onHomeClick: gotoHome,
     onProfileClick: () => router.push('/profile'),
     onAddEventClick: () => console.log('/users'),
     onUserListClick: () => router.push('/users'),
@@ -23,7 +25,7 @@ export const PageContainer = ({
   return (
     <Flex width="100%" justifyContent="center" px="1rem">
       <Box mt="4rem" mb="4rem" width="100%" maxWidth={['100%', '70rem']}>
-        <Toolbar pageTitle={title} />
+        <Toolbar pageTitle={`page // ${title}`} onGoHome={gotoHome} />
         {children}
         <Footer {...footerProps} />
       </Box>
