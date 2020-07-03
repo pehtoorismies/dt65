@@ -27,6 +27,7 @@ const ImageBox = styled.div<BoxProps>`
     'header'
     'title'
     'creator';
+  cursor: pointer;
 `
 
 const RaceLogo = styled(Medal)`
@@ -73,7 +74,7 @@ export const HeaderImage = ({
         alignItems="center"
         sx={{ gridArea: 'title' }}
       >
-        <Text as="h1" variant="eventCardHeader">
+        <Text as="h1" variant="eventCardHeader" sx={{ userSelect: 'none' }}>
           {title}
         </Text>
         {isRace && <RaceLogo />}
