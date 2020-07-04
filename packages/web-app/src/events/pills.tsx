@@ -1,29 +1,29 @@
 import React from 'react'
 import { Flex, Text } from 'rebass/styled-components'
-import { Participant } from '../common/participant'
 import { colors } from '../styles/colors'
+import { UserInfo } from '../users/user-info'
 
 interface Props {
-  participants: Participant[]
-  me?: Participant
+  participants: string[]
+  me?: UserInfo
 }
 
 export const Pills = ({ participants, me }: Props) => {
-  const pills = participants.map(({ nickname, id }) => {
+  const pills = participants.map(value => {
     return (
       <Text
         sx={{
           fontFamily: 'main',
           borderRadius: '0.4rem',
         }}
-        bg={me?.id === id ? 'blue' : 'pink'}
-        key={id}
+        bg={me?.nickname === value ? 'blue' : 'pink'}
+        key={value}
         p="0.5rem"
         m="0.3rem"
         fontSize={1}
         color="white"
       >
-        {nickname}
+        {value}
       </Text>
     )
   })

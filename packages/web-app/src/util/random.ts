@@ -4,10 +4,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { Event, EventType } from '../common/event'
 
 export const createRandomParticipant = () => {
-  return {
-    id: uuidv4().toString(),
-    nickname: faker.internet.userName(),
-  }
+  return faker.internet.userName()
+  // return {
+  //   id: uuidv4().toString(),
+  //   nickname: faker.internet.userName(),
+  // }
 }
 
 export const createRandomParticipants = times(createRandomParticipant)

@@ -11,13 +11,13 @@ import faker from 'faker'
 import { fromPairs, map, pipe, times } from 'ramda'
 import React from 'react'
 import { Event, EventType } from '../common/event'
-import { Participant } from '../common/participant'
+import { UserInfo } from '../users/user-info'
 import { EventCard } from './event-card'
+import { EventList } from './events-list'
 import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
 import { EVENT_TYPE_MAP } from './map-event-type-to-image'
 import { Pills } from './pills'
-import { EventList } from './events-list'
 
 export default {
   title: 'Events',
@@ -58,19 +58,22 @@ export const imageBox = () => {
 
 const getParticipants = (howMany = 10) => {
   return times(() => {
-    return {
-      nickname: faker.internet.userName(),
-      id: faker.random.uuid(),
-    }
+    return faker.internet.userName()
   }, howMany)
 }
 
 const participants = getParticipants()
 
-const getMe = (participants: Participant[]) => {
+const getMe = (participants: string[]): UserInfo => {
   const hasMe = boolean('me', true)
   if (hasMe) {
-    return participants[faker.random.number(participants.length)]
+    const me: UserInfo = {
+      nickname: participants[faker.random.number(participants.length)],
+      sub: faker.random.uuid(),
+      email: faker.internet.email(),
+      name: 'Koira',
+    }
+    return me
   }
 }
 
@@ -102,6 +105,10 @@ export const eventCard = () => {
       event={getEvent(participants)}
       me={getMe(participants)}
       isExpanded={boolean('isExpanded', true)}
+      participantEvents={{
+        addParticipantToEvent: action('JOIN'),
+        removeParticipantFromEvent: action('UNJOIN'),
+      }}
     />
   )
 }
@@ -114,5 +121,5 @@ export const eventList = () => {
 
   const events = times(randomEvent, 10)
 
-  return <EventList events={events} />
+  return <EventList events={events} onCardClick={action('cardClicked')} />
 }

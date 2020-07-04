@@ -5,6 +5,8 @@ import { SerializedEvent } from '../common/event'
 import { EventList } from '../events/events-list'
 import { getStore } from '../services/dynamo-util'
 
+import { EventId } from '../services/store'
+
 interface Props {
   serializedEvents: SerializedEvent[]
 }
@@ -23,7 +25,18 @@ const Home = ({ serializedEvents }: Props) => {
     router.push(`/[year]/[id]`, `/${year}/${monthDayId}`)
   }
 
-  return <EventList events={events} onCardClick={onCardClick} />
+  const participantEvents = {
+    addParticipantToEvent: (eventId: EventId) => console.log('Add'),
+    removeParticipantFromEvent: (eventId: EventId) => console.log('Remove'),
+  }
+
+  return (
+    <EventList
+      events={events}
+      onCardClick={onCardClick}
+      participantEvents={participantEvents}
+    />
+  )
 }
 
 export async function getServerSideProps() {

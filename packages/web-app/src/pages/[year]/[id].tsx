@@ -5,12 +5,15 @@ import { Flex } from 'rebass/styled-components'
 import { SerializedEvent } from '../../common/event'
 import { EventCard } from '../../events/event-card'
 import { getStore } from '../../services/dynamo-util'
+import { ParticipantEvents } from '../../events/participant-events'
+import { EventId } from '../../services/store'
 
 interface Props {
   serializedEvent: SerializedEvent
+  participantEvents: ParticipantEvents
 }
 
-const EventPage = ({ serializedEvent }: Props) => {
+const EventPage = ({ serializedEvent, participantEvents }: Props) => {
   const event = {
     ...serializedEvent,
     date: parseISO(serializedEvent.date),
@@ -19,7 +22,11 @@ const EventPage = ({ serializedEvent }: Props) => {
 
   return (
     <Flex justifyContent="center">
-      <EventCard event={event} isExpanded />
+      <EventCard
+        event={event}
+        isExpanded
+        participantEvents={participantEvents}
+      />
     </Flex>
   )
 }
@@ -27,7 +34,10 @@ const EventPage = ({ serializedEvent }: Props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id, year } = context.params
   const store = await getStore()
-  const event = await store.getEvent(Number(year), String(id))
+  const event = await store.getEvent({
+    yearId: Number(year),
+    monthDateId: String(id),
+  })
 
   return {
     props: {

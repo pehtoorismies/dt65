@@ -1,5 +1,3 @@
-import { Participant } from './participant'
-
 type Timestamps = {
   createdAt: Date
   updatedAt?: Date
@@ -33,7 +31,7 @@ export type Event = Timestamps & {
   date: Date
   exactTime?: boolean
   creator: string
-  participants: Participant[]
+  participants: string[]
 }
 
 export type SerializedEvent = Event & {

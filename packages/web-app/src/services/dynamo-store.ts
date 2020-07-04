@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk'
 import { format, getYear } from 'date-fns'
 import { Event, EventType, SerializedEvent } from '../common/event'
 import { UserInfo } from '../users/user-info'
-import { Store } from './store'
+import { Store, EventId } from './store'
 import { Table } from './table'
 
 const getSortKeyDate = (date: Date) => format(date, 'MM_dd')
@@ -21,14 +21,18 @@ const parseEvent = ({
   createdAt,
   monthDateId,
   date,
+  participants,
   ...rest
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any): SerializedEvent => {
+  console.log('p', participants)
+
   return {
     id: monthDateId,
     eventType: EventType.MEETING,
     date,
     createdAt,
+    participants: participants.values,
     ...rest,
   }
 }
@@ -53,8 +57,10 @@ export class DynamoStore implements Store {
   constructor(private documentClient: AWS.DynamoDB.DocumentClient) {}
 
   async createEvent(event: Event): Promise<Event> {
-    const { id, date, createdAt, ...rest } = event
+    const { id, date, createdAt, participants, ...rest } = event
     const { partitionKey, sortKey } = createPrimaryKey(date, id)
+
+    const participantsSet = this.documentClient.createSet(participants)
 
     const parameters: AWS.DynamoDB.DocumentClient.PutItemInput = {
       Item: {
@@ -62,6 +68,7 @@ export class DynamoStore implements Store {
         monthDateId: sortKey,
         createdAt: createdAt.toISOString(),
         date: date.toISOString(),
+        participants: participantsSet,
         ...rest,
       },
       ReturnValues: 'NONE',
@@ -89,10 +96,7 @@ export class DynamoStore implements Store {
     return toEvents(events)
   }
 
-  async getEvent(
-    yearId: number,
-    monthDateId: string
-  ): Promise<SerializedEvent> {
+  async getEvent({ yearId, monthDateId }: EventId): Promise<SerializedEvent> {
     const parameters: AWS.DynamoDB.DocumentClient.GetItemInput = {
       TableName: Table.EVENTS,
       Key: {
@@ -132,5 +136,27 @@ export class DynamoStore implements Store {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async addParticipant(
+    { yearId, monthDateId }: EventId,
+    nickname: string
+  ): Promise<boolean> {
+    const parameters: AWS.DynamoDB.DocumentClient.UpdateItemInput = {
+      TableName: Table.EVENTS,
+      Key: {
+        yearId,
+        monthDateId,
+      },
+      UpdateExpression: 'ADD participants :nickname',
+      ExpressionAttributeValues: {
+        ':nickname': this.documentClient.createSet([nickname]),
+      },
+
+      ReturnValues: 'ALL_NEW',
+    }
+
+    const response = await this.documentClient.update(parameters).promise()
+    return true
   }
 }

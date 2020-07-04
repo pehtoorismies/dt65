@@ -1,23 +1,25 @@
 import { Edit } from '@styled-icons/boxicons-regular/Edit'
-import { format } from 'date-fns'
+import { format, getYear } from 'date-fns'
 import React from 'react'
 import { Box, Card, Flex, Text } from 'rebass/styled-components'
 import styled, { css } from 'styled-components'
 import { Event } from '../common/event'
-import { Participant } from '../common/participant'
+import { UserInfo } from '../users/user-info'
 import { Description } from './description'
 import { HeadCountButton } from './head-count-button'
 import { HeaderImage } from './header-image'
 import { IconButton } from './icon-button'
 import { InfoText } from './info-text'
+import { ParticipantEvents } from './participant-events'
 import { Pills } from './pills'
 import { toFinnishDate } from './util'
 
 interface Props {
   event: Event
-  me?: Participant
+  me?: UserInfo
   onCardClick?: () => void
   isExpanded?: boolean
+  participantEvents: ParticipantEvents
 }
 
 const iconCss = css`
@@ -34,8 +36,15 @@ const EditIcon = styled(Edit)`
 
 const borderStyle = '0.1rem solid #e9e9e9'
 
-export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
+export const EventCard = ({
+  event,
+  me,
+  isExpanded,
+  onCardClick,
+  participantEvents,
+}: Props) => {
   const {
+    id,
     participants,
     address,
     description,
@@ -49,6 +58,10 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
   } = event
 
   const time = exactTime ? format(date, 'hh:mm') : undefined
+  const isParticipant = participants.includes(me?.nickname)
+  const toggleJoin = isParticipant
+    ? participantEvents.removeParticipantFromEvent
+    : participantEvents.addParticipantToEvent
 
   return (
     <Flex
@@ -104,10 +117,10 @@ export const EventCard = ({ event, me, isExpanded, onCardClick }: Props) => {
             <HeadCountButton
               loading={false}
               count={participants.length}
-              onClick={() => console.log('Join')}
-              isParticipant={
-                participants.findIndex(({ id }) => me?.id === id) >= 0
+              onClick={() =>
+                toggleJoin({ yearId: getYear(date), monthDateId: id })
               }
+              isParticipant={isParticipant}
             />
           </Flex>
         </Flex>
