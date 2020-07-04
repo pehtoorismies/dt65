@@ -5,18 +5,22 @@ import { Flex } from 'rebass/styled-components'
 import { SerializedEvent } from '../../common/event'
 import { EventCard } from '../../events/event-card'
 import { getStore } from '../../services/dynamo-util'
-import { ParticipantEvents } from '../../events/participant-events'
+import { EventId } from '../../services/store'
 
 interface Props {
   serializedEvent: SerializedEvent
-  participantEvents: ParticipantEvents
 }
 
-const EventPage = ({ serializedEvent, participantEvents }: Props) => {
+const EventPage = ({ serializedEvent }: Props) => {
   const event = {
     ...serializedEvent,
     date: parseISO(serializedEvent.date),
     createdAt: parseISO(serializedEvent.createdAt),
+  }
+
+  const participantEvents = {
+    addParticipantToEvent: (eventId: EventId) => console.log('Add'),
+    removeParticipantFromEvent: (eventId: EventId) => console.log('Remove'),
   }
 
   return (
