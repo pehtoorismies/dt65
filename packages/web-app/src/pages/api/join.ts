@@ -22,18 +22,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).end()
   }
-  const { yearId, monthDateId, nickname } = req.body
-  if (!yearId || !monthDateId || !nickname) {
+  const { yearId, monthDayId, nickname } = req.body
+  if (!yearId || !monthDayId || !nickname) {
     return res.status(400).end()
   }
   // Run the middleware
   // await runMiddleware(req, res)
   const store = await getStore()
   try {
-    await store.addParticipant(
-      { yearId: Number(yearId), monthDateId },
-      nickname
-    )
+    await store.addParticipant({ yearId: Number(yearId), monthDayId }, nickname)
     res.json({ message: 'Success' })
   } catch (error) {
     console.error(error)

@@ -118,7 +118,7 @@ export const EventCard = ({
               loading={false}
               count={participants.length}
               onClick={() =>
-                toggleJoin({ yearId: getYear(date), monthDateId: id })
+                toggleJoin({ yearId: getYear(date), monthDayId: id })
               }
               isParticipant={isParticipant}
             />

@@ -6,7 +6,6 @@ import { SerializedEvent } from '../../common/event'
 import { EventCard } from '../../events/event-card'
 import { getStore } from '../../services/dynamo-util'
 import { ParticipantEvents } from '../../events/participant-events'
-import { EventId } from '../../services/store'
 
 interface Props {
   serializedEvent: SerializedEvent
@@ -36,7 +35,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const store = await getStore()
   const event = await store.getEvent({
     yearId: Number(year),
-    monthDateId: String(id),
+    monthDayId: String(id),
   })
 
   return {

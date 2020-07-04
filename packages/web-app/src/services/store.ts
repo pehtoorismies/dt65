@@ -3,7 +3,7 @@ import { UserInfo } from '../users/user-info'
 
 export interface EventId {
   yearId: number
-  monthDateId: string
+  monthDayId: string
 }
 
 export interface Store {

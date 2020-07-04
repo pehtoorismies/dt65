@@ -19,7 +19,7 @@ const parseEvent = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   yearId,
   createdAt,
-  monthDateId,
+  monthDayId,
   date,
   participants,
   ...rest
@@ -28,7 +28,7 @@ any): SerializedEvent => {
   console.log('p', participants)
 
   return {
-    id: monthDateId,
+    id: monthDayId,
     eventType: EventType.MEETING,
     date,
     createdAt,
@@ -65,7 +65,7 @@ export class DynamoStore implements Store {
     const parameters: AWS.DynamoDB.DocumentClient.PutItemInput = {
       Item: {
         yearId: partitionKey,
-        monthDateId: sortKey,
+        monthDayId: sortKey,
         createdAt: createdAt.toISOString(),
         date: date.toISOString(),
         participants: participantsSet,
@@ -85,7 +85,7 @@ export class DynamoStore implements Store {
   async getEvents(fromDate: Date): Promise<SerializedEvent[]> {
     const parameters: AWS.DynamoDB.DocumentClient.QueryInput = {
       TableName: Table.EVENTS,
-      KeyConditionExpression: 'yearId = :yearId AND monthDateId >= :fromDate',
+      KeyConditionExpression: 'yearId = :yearId AND monthDayId >= :fromDate',
       ExpressionAttributeValues: {
         ':yearId': getYear(fromDate),
         ':fromDate': getSortKeyDate(fromDate),
@@ -96,12 +96,12 @@ export class DynamoStore implements Store {
     return toEvents(events)
   }
 
-  async getEvent({ yearId, monthDateId }: EventId): Promise<SerializedEvent> {
+  async getEvent({ yearId, monthDayId }: EventId): Promise<SerializedEvent> {
     const parameters: AWS.DynamoDB.DocumentClient.GetItemInput = {
       TableName: Table.EVENTS,
       Key: {
         yearId,
-        monthDateId,
+        monthDayId,
       },
     }
 
@@ -139,14 +139,14 @@ export class DynamoStore implements Store {
   }
 
   async addParticipant(
-    { yearId, monthDateId }: EventId,
+    { yearId, monthDayId }: EventId,
     nickname: string
   ): Promise<boolean> {
     const parameters: AWS.DynamoDB.DocumentClient.UpdateItemInput = {
       TableName: Table.EVENTS,
       Key: {
         yearId,
-        monthDateId,
+        monthDayId,
       },
       UpdateExpression: 'ADD participants :nickname',
       ExpressionAttributeValues: {

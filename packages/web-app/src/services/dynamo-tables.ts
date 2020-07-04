@@ -26,7 +26,7 @@ export const createEventsTable = async (dynamodb: AWS.DynamoDB) => {
         AttributeType: 'N',
       },
       {
-        AttributeName: 'monthDateId',
+        AttributeName: 'monthDayId',
         AttributeType: 'S',
       },
     ],
@@ -36,7 +36,7 @@ export const createEventsTable = async (dynamodb: AWS.DynamoDB) => {
         KeyType: 'HASH',
       },
       {
-        AttributeName: 'monthDateId',
+        AttributeName: 'monthDayId',
         KeyType: 'RANGE',
       },
     ],
